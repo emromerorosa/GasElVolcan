@@ -1,5 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribuidora Gas El Volcán - Productos</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <!-- TODO: logo + nombre del sitio -->
+                <span class="logo-nombre">Gas El Volcán</span>
+            </div>
+
+            <ul class="menu-principal">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+
+            <div class="acciones-usuario">
+                <a href="login.html">Iniciar sesión</a>
+                <a href="registro.html">Registrar usuario</a>
+                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+            </div>
+        </nav>
+    </header>
     <main>
         <h2>Productos</h2>
-        <!-- TODO: grilla de productos (imagen, nombre, precio, botón añadir) generada con JS -->
-        <!-- TODO: cada producto debe enlazar a producto-detalle.html -->
+        <div id="grid-productos"></div>
+        
+
+
     </main>
+    <footer>
+            <p>&copy; 2026 Distribuidora Gas El Volcán</p>
+            <!-- TODO: datos de contacto / redes -->
+    </footer>
+   <script src="js/productos-data.js"></script>
+    <script src="js/productos.js"></script>
+</body>
+</html>
