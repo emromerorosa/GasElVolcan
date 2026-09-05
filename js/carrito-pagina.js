@@ -28,6 +28,7 @@ function renderizarCarrito() {
 
     filas += `
       <tr>
+        <td>${obtenerImagenHtml(producto, "imagen-producto")}</td>
         <td>${producto.nombre}</td>
         <td>$${producto.precioResidencial}</td>
         <td>

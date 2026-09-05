@@ -10,6 +10,7 @@ const producto = PRODUCTOS.find(function (p) {
 document.getElementById("breadcrumb").textContent = `Home > ${producto.categoria} > ${producto.nombre}`;
 
 document.getElementById("detalleProducto").innerHTML = `
+  ${obtenerImagenHtml(producto, "imagen-producto-grande")}
   <h2>${producto.nombre}</h2>
   <p>$${producto.precioResidencial}</p>
   <p>${producto.descripcion}</p>
@@ -27,9 +28,10 @@ let filasRelacionados = "";
 relacionados.forEach(function (p) {
   filasRelacionados += `
     <div class="tarjeta-producto">
-      <h3>${p.nombre}</h3>
-      <p>$${p.precioResidencial}</p>
-      <a href="producto-detalle.html?codigo=${p.codigo}">Ver detalle</a>
+        ${obtenerImagenHtml(p, "imagen-producto")}
+        <h3>${p.nombre}</h3>
+        <p>$${p.precioResidencial}</p>
+        <a href="producto-detalle.html?codigo=${p.codigo}">Ver detalle</a>
     </div>
   `;
 });
