@@ -46,3 +46,10 @@ nav {
     padding: var(--espacio-md);
     border-bottom: 1px solid var(--color-primario);
 }
+
+footer {
+    text-align: center;
+    padding: var(--espacio-md);
+    background-color: var(--color-primario);
+    color: white;
+}
