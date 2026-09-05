@@ -44,3 +44,45 @@ function agregarAlCarrito(codigo, cantidad) {
 
   guardarCarrito(carrito);
 }
+
+function quitarDelCarrito(codigo) {
+  const carrito = obtenerCarrito();
+
+  const carritoActualizado = carrito.filter(function (item) {
+    return item.codigo !== codigo;
+  });
+
+  guardarCarrito(carritoActualizado);
+}
+
+function actualizarCantidad(codigo, nuevaCantidad) {
+  if (nuevaCantidad <= 0) {
+    quitarDelCarrito(codigo);
+    return;
+  }
+
+  const producto = PRODUCTOS.find(function (p) {
+    return p.codigo === codigo;
+  });
+
+  if (producto === undefined) {
+    console.error("Producto no encontrado:", codigo);
+    return;
+  }
+
+  if (nuevaCantidad > producto.stock) {
+    alert("No hay suficiente stock. Disponible: " + producto.stock);
+    return;
+  }
+
+  const carrito = obtenerCarrito();
+
+  const item = carrito.find(function (i) {
+    return i.codigo === codigo;
+  });
+
+  if (item) {
+    item.cantidad = nuevaCantidad;
+    guardarCarrito(carrito);
+  }
+}
