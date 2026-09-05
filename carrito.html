@@ -32,8 +32,26 @@
     </header>
     <main>
         <h2>Mi carrito de compras</h2>
-        <!-- TODO: listado de productos en el carrito (imagen, nombre, precio, cantidad +/-) -->
-        <!-- TODO: total, cupón de descuento, botón "Pagar" -->
+
+        <table id="tablaCarrito">
+        <thead>
+            <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
+            </tr>
+        </thead>
+        <tbody id="cuerpoCarrito">
+        </tbody>
+        </table>
+
+        <p>Total: $<span id="totalCarrito">0</span></p>
+
+        <button id="botonPagar" type="button">Pagar</button>
+
+        <p id="carritoVacio">Tu carrito está vacío.</p>
     </main>
 <footer>
             <p>&copy; 2026 Distribuidora Gas El Volcán</p>
@@ -41,5 +59,6 @@
     </footer>
     <script src="js/productos-data.js"></script>
     <script src="js/carrito.js"></script>
+    <script src="js/carrito-pagina.js"></script>
 </body>
 </html>

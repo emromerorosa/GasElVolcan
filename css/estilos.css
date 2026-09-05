@@ -53,3 +53,16 @@ footer {
     background-color: var(--color-primario);
     color: white;
 }
+
+#tablaCarrito {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--espacio-md);
+}
+
+#tablaCarrito th,
+#tablaCarrito td {
+  border: 1px solid var(--color-primario);
+  padding: var(--espacio-md);
+  text-align: center;
+}
