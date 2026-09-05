@@ -86,3 +86,34 @@ function actualizarCantidad(codigo, nuevaCantidad) {
     guardarCarrito(carrito);
   }
 }
+
+function calcularTotal() {
+  const carrito = obtenerCarrito();
+
+  let total = 0;
+
+  carrito.forEach(function (item) {
+    const producto = PRODUCTOS.find(function (p) {
+      return p.codigo === item.codigo;
+    });
+
+    total = total + producto.precioResidencial * item.cantidad;
+  });
+
+  return total;
+}
+
+function actualizarContadorCarrito() {
+  const carrito = obtenerCarrito();
+
+  let totalUnidades = 0;
+
+  carrito.forEach(function (item) {
+    totalUnidades = totalUnidades + item.cantidad;
+  });
+
+  const contador = document.getElementById("contadorCarrito");
+  contador.textContent = totalUnidades;
+}
+
+actualizarContadorCarrito();
