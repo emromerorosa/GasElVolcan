@@ -3,8 +3,50 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Actualizar contador del carrito
   if (typeof actualizarContadorCarrito === "function") {
     actualizarContadorCarrito();
+  }
+
+  let usuarios = JSON.parse(localStorage.getItem("usuarios"));
+
+  if (!usuarios || usuarios.length === 0) {
+    usuarios = [
+      {
+        run: "111111111", // Admin demostrativo
+        nombre: "Admin",
+        apellidos: "Gas El Volcán",
+        correo: "admin@duoc.cl",
+        password: "admin",
+        tipoUsuario: "Administrador",
+        region: "Región de Ñuble",
+        comuna: "Chillán",
+        direccion: "Bodega Central Chillán"
+      },
+      {
+        run: "222222222",
+        nombre: "Carlos",
+        apellidos: "Repartidor Ñuble",
+        correo: "vendedor@duoc.cl",
+        password: "vende",
+        tipoUsuario: "Vendedor",
+        region: "Región de Ñuble",
+        comuna: "Chillán Viejo",
+        direccion: "Turno Ruta 1"
+      },
+      {
+        run: "19011022K",
+        nombre: "Juan",
+        apellidos: "Pérez",
+        correo: "cliente@gmail.com",
+        password: "1234",
+        tipoUsuario: "Cliente",
+        region: "Región de Ñuble",
+        comuna: "Chillán",
+        direccion: "Av. Argentina 550"
+      }
+    ];
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
   }
 
   // Elementos del DOM
@@ -16,40 +58,34 @@ document.addEventListener("DOMContentLoaded", () => {
   const errorPassword = document.getElementById("error-password");
   const mensajeGeneral = document.getElementById("mensaje-general");
 
-  // Dominios permitidos según la pauta
   const dominiosValidos = ["@duoc.cl", "@profesor.duoc.cl", "@gmail.com"];
 
-  // FUNCIONES DE VALIDACIÓN
-
-  function validarCorreo() {
+  // VALIDACIONES EN TIEMPO REAL (Formato)
+  function validarCorreoFormato() {
     const valor = inputCorreo.value.trim().toLowerCase();
 
-    // 1 Requerido
     if (valor === "") {
-      mostrarError(inputCorreo, errorCorreo, "El correo electronico es obligatorio.");
+      mostrarError(inputCorreo, errorCorreo, "El correo electrónico es obligatorio.");
       return false;
     }
 
-    // 2 Máximo 100 caracteres
     if (valor.length > 100) {
-      mostrarError(inputCorreo, errorCorreo, "El correo no puede exceder los 100 caracteres.");
+      mostrarError(inputCorreo, errorCorreo, "Máximo 100 caracteres.");
       return false;
     }
 
-    // 3 Estructura general de un email (texto@dominio.extension)
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regexEmail.test(valor)) {
       mostrarError(inputCorreo, errorCorreo, "Ingresa un formato de correo válido.");
       return false;
     }
 
-    // 4 Solo dominios permitidos: @duoc.cl, @profesor.duoc.cl o @gmail.com
     const tieneDominioPermitido = dominiosValidos.some(dominio => valor.endsWith(dominio));
     if (!tieneDominioPermitido) {
       mostrarError(
         inputCorreo, 
         errorCorreo, 
-        "Dominio no permitido. Solo se acepta @duoc.cl, @profesor.duoc.cl o @gmail.com"
+        "Solo se permite @duoc.cl, @profesor.duoc.cl o @gmail.com"
       );
       return false;
     }
@@ -58,18 +94,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
-  function validarPassword() {
+  function validarPasswordFormato() {
     const valor = inputPassword.value;
 
-    // 1. Requerido
     if (valor.trim() === "") {
       mostrarError(inputPassword, errorPassword, "La contraseña es obligatoria.");
       return false;
     }
 
-    // 2. Entre 4 y 10 caracteres
     if (valor.length < 4 || valor.length > 10) {
-      mostrarError(inputPassword, errorPassword, "La contraseña debe tener entre 4 y 10 caracteres.");
+      mostrarError(inputPassword, errorPassword, "Debe tener entre 4 y 10 caracteres.");
       return false;
     }
 
@@ -77,7 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
-  // HELPERS VISUALES (Mensajes de error)
   function mostrarError(input, elementoError, mensaje) {
     input.classList.add("input-invalido");
     input.classList.remove("input-valido");
@@ -90,39 +123,62 @@ document.addEventListener("DOMContentLoaded", () => {
     elementoError.textContent = "";
   }
 
-  // EVENTOS EN TIEMPO REAL (input y blur)
-  inputCorreo.addEventListener("input", validarCorreo);
-  inputCorreo.addEventListener("blur", validarCorreo);
+  inputCorreo.addEventListener("input", validarCorreoFormato);
+  inputCorreo.addEventListener("blur", validarCorreoFormato);
 
-  inputPassword.addEventListener("input", validarPassword);
-  inputPassword.addEventListener("blur", validarPassword);
+  inputPassword.addEventListener("input", validarPasswordFormato);
+  inputPassword.addEventListener("blur", validarPasswordFormato);
 
-  // ENVÍO DEL FORMULARIO
+  // AUTENTICACIÓN AL ENVIAR (Verificación Real)
   form.addEventListener("submit", (e) => {
-    e.preventDefault(); // Evita recargar la página
+    e.preventDefault();
 
-    // Ejecutar ambas validaciones
-    const correoOk = validarCorreo();
-    const passwordOk = validarPassword();
+    const correoOk = validarCorreoFormato();
+    const passwordOk = validarPasswordFormato();
 
-    if (correoOk && passwordOk) {
-      // Éxito: Simular inicio de sesión
-      mensajeGeneral.className = "mensaje-alerta exito";
-      mensajeGeneral.textContent = "Sesión iniciada correctamente Redirigiendo...";
+    if (!correoOk || !passwordOk) {
+      mensajeGeneral.className = "mensaje-alerta error";
+      mensajeGeneral.textContent = "Por favor, completa correctamente los campos.";
+      return;
+    }
 
-      // Guardar simulación de sesión en localStorage para persistencia
+    const correoIngresado = inputCorreo.value.trim().toLowerCase();
+    const passwordIngresada = inputPassword.value;
+
+    // 1. Obtener la lista actualizada de usuarios
+    const usuariosRegistrados = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+    // 2. Buscar si existe un usuario con ese correo y esa contraseña
+    const usuarioEncontrado = usuariosRegistrados.find(
+      u => u.correo.toLowerCase() === correoIngresado && u.password === passwordIngresada
+    );
+
+    if (usuarioEncontrado) {
+      // Éxito: Guardar sesión activa con su ROL REAL
       localStorage.setItem("usuarioActivo", JSON.stringify({
-        correo: inputCorreo.value.trim(),
-        rol: "Cliente"
+        run: usuarioEncontrado.run,
+        nombre: `${usuarioEncontrado.nombre} ${usuarioEncontrado.apellidos}`,
+        correo: usuarioEncontrado.correo,
+        rol: usuarioEncontrado.tipoUsuario || "Cliente"
       }));
 
-      // Redirigir al home tras 1.5 segundos
+      mensajeGeneral.className = "mensaje-alerta exito";
+      mensajeGeneral.textContent = `¡Bienvenido/a ${usuarioEncontrado.nombre}! (Rol: ${usuarioEncontrado.tipoUsuario}). Redirigiendo...`;
+
+      // Redirigir según el rol
       setTimeout(() => {
-        window.location.href = "index.html";
+        if (usuarioEncontrado.tipoUsuario === "Administrador" || usuarioEncontrado.tipoUsuario === "Vendedor") {
+          window.location.href = "admin/home.html";
+        } else {
+          window.location.href = "index.html";
+        }
       }, 1500);
+
     } else {
+      // Error de credenciales
       mensajeGeneral.className = "mensaje-alerta error";
-      mensajeGeneral.textContent = "Por favor, corrige los campos marcados en rojo.";
+      mensajeGeneral.textContent = "Correo o contraseña incorrectos. Verifica tus datos o regístrate.";
+      mostrarError(inputPassword, errorPassword, "Credenciales no coinciden con ninguna cuenta.");
     }
   });
 });

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarContadorCarrito();
   }
 
-  // DATOS DE REGIONES Y COMUNAS (Cobertura Chillán / Ñuble)
+  // COMUNAS REALES DE COBERTURA (Región de Ñuble)
   const datosUbicacion = [
     {
       region: "Región de Ñuble",
@@ -21,14 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "Bulnes",
         "Quillón"
       ]
-    },
-    {
-      region: "Región del Biobío",
-      comunas: ["Concepción", "Talcahuano", "San Pedro de la Paz", "Chiguayante", "Los Ángeles"]
-    },
-    {
-      region: "Región Metropolitana de Santiago",
-      comunas: ["Santiago", "Providencia", "Las Condes", "Maipú", "Puente Alto", "Ñuñoa"]
     }
   ];
 
@@ -62,8 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const dominiosValidos = ["@duoc.cl", "@profesor.duoc.cl", "@gmail.com"];
 
-  // CARGA DINÁMICA DE REGIONES Y COMUNAS
-  // 1 Cargar opciones de regiones
+  // CARGA DE REGIONES Y COMUNAS
   datosUbicacion.forEach(item => {
     const opt = document.createElement("option");
     opt.value = item.region;
@@ -71,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     selectRegion.appendChild(opt);
   });
 
-  // 2 Evento al cambiar de región -> actualizar comunas
   selectRegion.addEventListener("change", () => {
     const regionSeleccionada = selectRegion.value;
     selectComuna.innerHTML = '<option value="">-- Selecciona una comuna --</option>';
@@ -109,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (valor.includes(".") || valor.includes("-")) {
-      mostrarError(inputRun, errorRun, "El RUN debe ser sin puntos ni guion (ej: 19011022K).");
+      mostrarError(inputRun, errorRun, "El RUN debe ser sin puntos ni guión (ej: 19011022K).");
       return false;
     }
 
@@ -118,9 +108,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
 
-    // Llamada a la función matemática que creamos en js/validacion-run.js
+    if (typeof validarRUN !== "function") {
+      mostrarError(inputRun, errorRun, "Error interno: funcion validarRUN no disponible.");
+      return false;
+    }
+
     if (!validarRUN(valor)) {
-      mostrarError(inputRun, errorRun, "El RUN ingresado no es valido (dígito verificador incorrecto).");
+      mostrarError(inputRun, errorRun, "El RUN ingresado no es válido (dígito verificador incorrecto).");
       return false;
     }
 
@@ -135,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
     if (valor.length > 50) {
-      mostrarError(inputNombre, errorNombre, "Maximo 50 caracteres.");
+      mostrarError(inputNombre, errorNombre, "Máximo 50 caracteres.");
       return false;
     }
     limpiarError(inputNombre, errorNombre);
@@ -149,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
     if (valor.length > 100) {
-      mostrarError(inputApellidos, errorApellidos, "Maximo 100 caracteres.");
+      mostrarError(inputApellidos, errorApellidos, "Máximo 100 caracteres.");
       return false;
     }
     limpiarError(inputApellidos, errorApellidos);
@@ -163,12 +157,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
     if (valor.length > 100) {
-      mostrarError(inputCorreo, errorCorreo, "Maximo 100 caracteres.");
+      mostrarError(inputCorreo, errorCorreo, "Máximo 100 caracteres.");
       return false;
     }
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regexEmail.test(valor)) {
-      mostrarError(inputCorreo, errorCorreo, "Formato de correo no valido.");
+      mostrarError(inputCorreo, errorCorreo, "Formato de correo no válido.");
       return false;
     }
     const tieneDominioPermitido = dominiosValidos.some(dominio => valor.endsWith(dominio));
@@ -191,7 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
     limpiarError(inputPassword, errorPassword);
-    // Si ya escribió en confirmPassword, re-validar coincidencia
     if (inputConfirmPassword.value !== "") {
       validarConfirmPassword();
     }
@@ -217,10 +210,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const valor = inputTelefono.value.trim();
     if (valor === "") {
       limpiarError(inputTelefono, errorTelefono);
-      return true; // Es opcional
+      return true;
     }
     if (!/^\+?[0-9]{8,12}$/.test(valor)) {
-      mostrarError(inputTelefono, errorTelefono, "Formato invalido. Ej: +56912345678 o 912345678");
+      mostrarError(inputTelefono, errorTelefono, "Formato inválido. Ej: +56912345678");
       return false;
     }
     limpiarError(inputTelefono, errorTelefono);
@@ -231,12 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const valor = inputFechaNac.value;
     if (!valor) {
       limpiarError(inputFechaNac, errorFechaNac);
-      return true; // Es opcional
+      return true;
     }
     const fecha = new Date(valor);
     const hoy = new Date();
     if (fecha > hoy) {
-      mostrarError(inputFechaNac, errorFechaNac, "La fecha de nacimiento no puede ser futura.");
+      mostrarError(inputFechaNac, errorFechaNac, "La fecha no puede ser futura.");
       return false;
     }
     limpiarError(inputFechaNac, errorFechaNac);
@@ -275,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
-  // Helpers
+  // Helpers visuales
   function mostrarError(input, elemError, mensaje) {
     input.classList.add("input-invalido");
     input.classList.remove("input-valido");
@@ -288,33 +281,26 @@ document.addEventListener("DOMContentLoaded", () => {
     elemError.textContent = "";
   }
 
-  // Listeners de eventos
+  // Event Listeners
   inputRun.addEventListener("input", validarCampoRUN);
   inputRun.addEventListener("blur", validarCampoRUN);
-
   inputNombre.addEventListener("input", validarNombre);
   inputNombre.addEventListener("blur", validarNombre);
-
   inputApellidos.addEventListener("input", validarApellidos);
   inputApellidos.addEventListener("blur", validarApellidos);
-
   inputCorreo.addEventListener("input", validarCorreo);
   inputCorreo.addEventListener("blur", validarCorreo);
-
   inputPassword.addEventListener("input", validarPassword);
   inputPassword.addEventListener("blur", validarPassword);
-
   inputConfirmPassword.addEventListener("input", validarConfirmPassword);
   inputConfirmPassword.addEventListener("blur", validarConfirmPassword);
-
   inputTelefono.addEventListener("input", validarTelefono);
   inputTelefono.addEventListener("blur", validarTelefono);
-
   inputFechaNac.addEventListener("change", validarFechaNac);
   inputDireccion.addEventListener("input", validarDireccion);
   inputDireccion.addEventListener("blur", validarDireccion);
 
-  // ENVÍO DEL REGISTRO
+  // REGISTRAR USUARIO
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -335,29 +321,45 @@ document.addEventListener("DOMContentLoaded", () => {
       passwordOk && confirmOk && telOk && fechaOk && 
       regionOk && comunaOk && dirOk
     ) {
+      // Objeto usuario acordado + password para autenticación
       const nuevoUsuario = {
         run: inputRun.value.trim().toUpperCase(),
         nombre: inputNombre.value.trim(),
         apellidos: inputApellidos.value.trim(),
         correo: inputCorreo.value.trim().toLowerCase(),
+        password: inputPassword.value, // Necesaria para el login
         fechaNacimiento: inputFechaNac.value || "No especificada",
+        telefono: inputTelefono.value.trim() || "No especificado",
         tipoUsuario: "Cliente",
         region: selectRegion.value,
         comuna: selectComuna.value,
         direccion: inputDireccion.value.trim()
       };
 
-      // Guardar en localStorage para que el panel de administración lo vea
       const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+      // Verificar que el correo o RUN no estén ya registrados
+      const correoExiste = usuariosGuardados.some(u => u.correo === nuevoUsuario.correo);
+      if (correoExiste) {
+        mostrarError(inputCorreo, errorCorreo, "Este correo ya se encuentra registrado.");
+        return;
+      }
+
+      const runExiste = usuariosGuardados.some(u => u.run === nuevoUsuario.run);
+      if (runExiste) {
+        mostrarError(inputRun, errorRun, "Este RUN ya se encuentra registrado.");
+        return;
+      }
+
       usuariosGuardados.push(nuevoUsuario);
       localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
 
       mensajeGeneral.className = "mensaje-alerta exito";
-      mensajeGeneral.textContent = "¡Usuario registrado con exito! Redirigiendo al inicio de sesion...";
+      mensajeGeneral.textContent = "¡Usuario registrado con éxito! Redirigiendo a Iniciar Sesión...";
 
       setTimeout(() => {
         window.location.href = "login.html";
-      }, 2000);
+      }, 1500);
     } else {
       mensajeGeneral.className = "mensaje-alerta error";
       mensajeGeneral.textContent = "Por favor, completa correctamente todos los campos obligatorios.";
