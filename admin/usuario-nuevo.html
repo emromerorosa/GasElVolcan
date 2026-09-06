@@ -1,4 +1,57 @@
-    <main class="admin-contenido">
-        <h1>Nuevo Usuario</h1>
-        <!-- TODO: formulario usuario (RUN, nombre, apellidos, correo, fecha nacimiento, tipo usuario, región, comuna, dirección) -->
-    </main>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Nuevo Usuario</title>
+</head>
+<body>
+
+<h1>Nuevo Usuario</h1>
+
+<a href="usuarios.html">Volver a Usuarios</a>
+<br><br>
+
+Correo: <br>
+<input type="text" id="correo" placeholder="ej: cliente@gmail.com">
+<br><br>
+
+Clave: <br>
+<input type="text" id="clave" placeholder="123456">
+<br><br>
+
+Rol: <br>
+<select id="rol">
+  <option value="cliente">cliente</option>
+  <option value="admin">admin</option>
+</select>
+<br><br>
+
+<button onclick="guardar()">Guardar Usuario</button>
+
+<script>
+function guardar(){
+  var correo = document.getElementById("correo").value;
+  var clave = document.getElementById("clave").value;
+  var rol = document.getElementById("rol").value;
+
+  if(correo == "" || clave == ""){
+    alert("Completa todos los campos");
+    return;
+  }
+
+  var usuarios = JSON.parse(localStorage.getItem("usuarios"));
+  if(usuarios == null){
+    usuarios = [{correo: "admin@gaselvolcan.cl", pass: "admin123", rol: "admin"}];
+  }
+
+  var nuevo = {correo: correo, pass: clave, rol: rol};
+  usuarios.push(nuevo);
+
+  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+  alert("Usuario guardado: " + correo);
+  window.location.href = "usuarios.html";
+}
+</script>
+
+</body>
+</html>
