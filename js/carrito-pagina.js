@@ -1,23 +1,22 @@
-
-// Pinta la tabla del carrito: muestra los productos, calcula subtotales y el total,
-// y maneja el caso de carrito vacío
 function renderizarCarrito() {
   const carrito = obtenerCarrito();
 
   const tabla = document.getElementById("tablaCarrito");
   const cuerpo = document.getElementById("cuerpoCarrito");
   const mensajeVacio = document.getElementById("carritoVacio");
+  const totalEl = document.getElementById("totalCarrito");
+  if(!tabla ||!cuerpo) return;
 
   if (carrito.length === 0) {
     tabla.hidden = true;
-    mensajeVacio.hidden = false;
-    document.getElementById("totalCarrito").textContent = 0;
+    if(mensajeVacio) mensajeVacio.hidden = false;
+    if(totalEl) totalEl.textContent = 0;
     actualizarContadorCarrito();
     return;
   }
 
   tabla.hidden = false;
-  mensajeVacio.hidden = true;
+  if(mensajeVacio) mensajeVacio.hidden = true;
 
   let filas = "";
 
@@ -25,6 +24,8 @@ function renderizarCarrito() {
     const producto = PRODUCTOS.find(function (p) {
       return p.codigo === item.codigo;
     });
+
+    if(!producto) return; // si el producto fue eliminado del catalogo, lo saltamos
 
     const subtotal = producto.precioResidencial * item.cantidad;
 
@@ -48,7 +49,7 @@ function renderizarCarrito() {
 
   cuerpo.innerHTML = filas;
 
-  document.getElementById("totalCarrito").textContent = calcularTotal();
+  if(totalEl) totalEl.textContent = calcularTotal();
 
   actualizarContadorCarrito();
 }
