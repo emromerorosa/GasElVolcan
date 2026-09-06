@@ -32,13 +32,13 @@ function renderizarCarrito() {
         <td>${producto.nombre}</td>
         <td>$${producto.precioResidencial}</td>
         <td>
-          <button type="button" onclick="actualizarCantidad('${item.codigo}', ${item.cantidad - 1}); renderizarCarrito();">-</button>
+          <button type="button" class="btn-cantidad" onclick="actualizarCantidad('${item.codigo}', ${item.cantidad - 1}); renderizarCarrito();">-</button>
           ${item.cantidad}
-          <button type="button" onclick="actualizarCantidad('${item.codigo}', ${item.cantidad + 1}); renderizarCarrito();">+</button>
+          <button type="button" class="btn-cantidad" onclick="actualizarCantidad('${item.codigo}', ${item.cantidad + 1}); renderizarCarrito();">+</button>
         </td>
         <td>$${subtotal}</td>
         <td>
-          <button type="button" onclick="quitarDelCarrito('${item.codigo}'); renderizarCarrito();">Quitar</button>
+          <button type="button" class="btn-secundario" onclick="quitarDelCarrito('${item.codigo}'); renderizarCarrito();">Quitar</button>
         </td>
       </tr>
     `;

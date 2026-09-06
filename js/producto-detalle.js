@@ -16,7 +16,7 @@ document.getElementById("detalleProducto").innerHTML = `
   <p>${producto.descripcion}</p>
   <label for="inputCantidad">Cantidad:</label>
   <input type="number" id="inputCantidad" value="1" min="1">
-  <button type="button" onclick="agregarAlCarrito('${producto.codigo}', Number(document.getElementById('inputCantidad').value)); actualizarContadorCarrito(); alert('Producto agregado al carrito');">Añadir al carrito</button>
+  <button type="button" class="btn-primario" onclick="agregarAlCarrito('${producto.codigo}', Number(document.getElementById('inputCantidad').value)); actualizarContadorCarrito(); alert('Producto agregado al carrito');">Añadir al carrito</button>
 `;
 
 const relacionados = PRODUCTOS.filter(function (p) {
@@ -31,7 +31,7 @@ relacionados.forEach(function (p) {
         ${obtenerImagenHtml(p, "imagen-producto")}
         <h3>${p.nombre}</h3>
         <p>$${p.precioResidencial}</p>
-        <a href="producto-detalle.html?codigo=${p.codigo}">Ver detalle</a>
+        <a class="btn-secundario" href="producto-detalle.html?codigo=${p.codigo}">Ver detalle</a>
     </div>
   `;
 });
