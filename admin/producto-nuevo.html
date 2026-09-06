@@ -1,4 +1,31 @@
-    <main class="admin-contenido">
-        <h1>Nuevo Producto</h1>
-        <!-- TODO: formulario producto (código, nombre, descripción, precio, stock, stock crítico, categoría, imagen) -->
-    </main>
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Nuevo Producto</title></head>
+<body>
+<h1>Agregar Producto</h1>
+Nombre: <input type="text" id="nombre"><br><br>
+Precio: <input type="number" id="precio"><br><br>
+Stock: <input type="number" id="stock"><br><br>
+<button onclick="agregar()">Guardar</button>
+<a href="productos.html">Volver</a>
+
+<script src="../js/productos-data.js"></script>
+<script>
+function agregar(){
+    var nombre = document.getElementById("nombre").value;
+    var precio = document.getElementById("precio").value;
+    var stock = document.getElementById("stock").value;
+    var nuevo = {
+        id: productos.length + 1,
+        nombre: nombre,
+        precio: parseInt(precio),
+        stock: parseInt(stock)
+    };
+    productos.push(nuevo);
+    localStorage.setItem("productos", JSON.stringify(productos));
+    alert("Guardado");
+    window.location.href = "productos.html";
+}
+</script>
+</body>
+</html>

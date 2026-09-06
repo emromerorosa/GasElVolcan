@@ -1,16 +1,10 @@
+var productos = [
+    {id: 1, nombre: "Gas 5kg", precio: 12000, stock: 30},
+    {id: 2, nombre: "Gas 15kg", precio: 25000, stock: 50},
+    {id: 3, nombre: "Gas 45kg", precio: 65000, stock: 20}
+];
 
-// Muestra la grilla de productos en productos.html, recorriendo el arreglo PRODUCTOS
-const contenedor = document.getElementById("grid-productos");
-
-let html= "";
-PRODUCTOS.forEach(function (producto) {
-    html += `
-    <div class="tarjeta-producto">
-    ${obtenerImagenHtml(producto, "imagen-producto")}
-    <h3>${producto.nombre}</h3>
-    <p>$${producto.precioResidencial}</p>
-    <a class="btn-secundario" href="producto-detalle.html?codigo=${producto.codigo}">Ver detalle</a>
-    <button type="button" class="btn-primario" onclick="agregarAlCarrito('${producto.codigo}', 1); actualizarContadorCarrito(); alert('Producto agregado al carrito');">Añadir</button>
-  </div>`;
-});
-contenedor.innerHTML = html;
+var guardado = localStorage.getItem("productos");
+if(guardado!= null){
+    productos = JSON.parse(guardado);
+}

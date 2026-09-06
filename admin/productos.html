@@ -1,91 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Admin Productos</title>
-<style>
-body{font-family:Arial; margin:0; background:#f4f4f4;}
-nav{background:#1a5a8a; color:white; padding:15px; display:flex; justify-content:space-between;}
-nav a{color:white; margin-right:15px; text-decoration:none; font-weight:bold;}
-main{max-width:1000px; margin:30px auto; background:white; padding:20px; border-radius:8px;}
-table{width:100%; border-collapse:collapse; margin-top:20px;}
-th,td{border:1px solid #ccc; padding:10px; text-align:left;}
-th{background:#1a5a8a; color:white;}
-button{padding:6px 10px; cursor:pointer; border:none; border-radius:4px; color:white;}
-.btn-del{background:#c0392b;} .btn-add{background:#27ae60;}
-#formProd{margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;}
-#formProd input{padding:8px; flex:1; min-width:150px;}
-</style>
+<link rel="stylesheet" href="../css/estilos.css">
+<link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-<nav>
-<div><b>Gas El Volcán - ADMIN</b></div>
-<div><a href="../index.html">Home</a><a href="productos.html">Productos</a><a href="usuarios.html">Usuarios</a><a href="#" onclick="salir()">Salir</a></div>
-</nav>
-<main>
-<h1>Gestión de Productos</h1>
-<p>Logueado como: <b id="userMail"></b></p>
+<h1>Admin - Productos</h1>
+<a href="home.html">Inicio Admin</a> |
+<a href="producto-nuevo.html">Agregar Producto</a> |
+<a href="usuarios.html">Usuarios</a>
 
-<table id="tablaProductos">
-<thead><tr><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acción</th></tr></thead>
-<tbody></tbody>
+<table border="1" style="margin-top:20px; width:80%">
+<thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr></thead>
+<tbody id="cuerpoTabla"></tbody>
 </table>
 
-<h3>Agregar Producto</h3>
-<form id="formProd">
-<input type="text" id="pNombre" placeholder="Ej: Gas 15kg" required>
-<input type="number" id="pPrecio" placeholder="Precio Ej: 25000" required>
-<input type="number" id="pStock" placeholder="Stock Ej: 50" required>
-<button type="submit" class="btn-add">Agregar</button>
-</form>
-</main>
-
-<script>
-// Proteccion admin
-const log = JSON.parse(localStorage.getItem('usuarioLogueado') || 'null');
-if(!log || log.rol !== 'admin'){ window.location.href = '../login.html'; }
-document.getElementById('userMail').innerText = log.correo;
-
-function cargar(){
-    const productos = JSON.parse(localStorage.getItem('productos') || '[]');
-    const tbody = document.querySelector('#tablaProductos tbody');
-    tbody.innerHTML = '';
-    if(productos.length===0){
-        // productos por defecto
-        const porDefecto = [
-            {nombre:'Gas 5kg', precio:12000, stock:30},
-            {nombre:'Gas 15kg', precio:25000, stock:50},
-            {nombre:'Gas 45kg', precio:65000, stock:20}
-        ];
-        localStorage.setItem('productos', JSON.stringify(porDefecto));
-        return cargar();
-    }
-    productos.forEach((p,i)=>{
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${p.nombre}</td><td>$${p.precio}</td><td>${p.stock}</td><td><button class="btn-del" onclick="eliminar(${i})">Eliminar</button></td>`;
-        tbody.appendChild(tr);
-    });
-}
-function eliminar(idx){
-    let productos = JSON.parse(localStorage.getItem('productos') || '[]');
-    productos.splice(idx,1);
-    localStorage.setItem('productos', JSON.stringify(productos));
-    cargar();
-}
-document.getElementById('formProd').addEventListener('submit', e=>{
-    e.preventDefault();
-    let productos = JSON.parse(localStorage.getItem('productos') || '[]');
-    productos.push({
-        nombre: document.getElementById('pNombre').value,
-        precio: parseInt(document.getElementById('pPrecio').value),
-        stock: parseInt(document.getElementById('pStock').value)
-    });
-    localStorage.setItem('productos', JSON.stringify(productos));
-    e.target.reset();
-    cargar();
-});
-function salir(){ localStorage.removeItem('usuarioLogueado'); window.location.href='../login.html'; }
-cargar();
-</script>
+<script src="../js/productos-data.js"></script>
+<script src="../js/admin-productos.js"></script>
 </body>
 </html>

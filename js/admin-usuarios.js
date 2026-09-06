@@ -1,47 +1,31 @@
-// Estructura oficial Acuerdo C+D - pág 2 guia_equipo.pdf
-const usuarios = [
-  { 
-    run: "12.345.678-9", 
-    nombre: "Juan", 
-    apellidos: "Pérez González", 
-    correo: "juan@gmail.com", 
-    fechaNacimiento: "1998-04-15",
-    tipoUsuario: "Cliente", 
-    region: "Ñuble", 
-    comuna: "Chillán", 
-    direccion: "Av. Libertad 123",
-    regionComunaOk: true
-  },
-  { 
-    run: "98.765.432-1", 
-    nombre: "María", 
-    apellidos: "Gómez Soto", 
-    correo: "maria@volcan.cl", 
-    fechaNacimiento: "1990-10-20",
-    tipoUsuario: "Administrador", 
-    region: "Ñuble", 
-    comuna: "Chillán Viejo", 
-    direccion: "Calle Prat 456",
-    regionComunaOk: true
-  }
+var usuarios = [
+    {correo: "admin@gaselvolcan.cl", pass: "admin123", rol: "admin"}
 ];
 
-const tablaUser = document.getElementById("tablaUsuariosBody");
-
-if (tablaUser) {
-  usuarios.forEach(u => {
-    tablaUser.innerHTML += `
-      <tr>
-        <td>${u.run}</td>
-        <td>${u.nombre}</td>
-        <td>${u.apellidos}</td>
-        <td>${u.correo}</td>
-        <td>${u.tipoUsuario}</td>
-        <td><a href="usuario-editar.html?run=${u.run}">Editar</a></td>
-      </tr>
-    `;
-  });
+var g = localStorage.getItem("usuarios");
+if(g!= null){
+    usuarios = JSON.parse(g);
+} else {
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
 }
 
+function mostrarUsuarios(){
+    var cuerpo = document.getElementById("cuerpoUsuarios");
+    if(cuerpo == null) return;
+    cuerpo.innerHTML = "";
+    for(var i=0; i < usuarios.length; i++){
+        cuerpo.innerHTML += "<tr><td>"+usuarios[i].correo+"</td><td>"+usuarios[i].rol+"</td><td><button onclick='eliminarUsuario("+i+")'>Eliminar</button></td></tr>";
+    }
+}
 
-localStorage.setItem('usuarios', JSON.stringify(usuarios));
+function eliminarUsuario(i){
+    if(usuarios[i].correo == "admin@gaselvolcan.cl"){
+        alert("No se puede eliminar admin principal");
+        return;
+    }
+    usuarios.splice(i,1);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    mostrarUsuarios();
+}
+
+mostrarUsuarios();
