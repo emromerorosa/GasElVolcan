@@ -1,3 +1,5 @@
+// Pinta la tabla del carrito: muestra los productos, calcula subtotales y el total,
+// y maneja el caso de carrito vacío
 function renderizarCarrito() {
   const carrito = obtenerCarrito();
 
