@@ -3,39 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Distribuidora Gas El Volcán - Iniciar Sesión</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <title>Login - Gas El Volcán</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<header>
+    <nav>
+        <a href="index.html">Gas El Volcán</a>
+        <div class="acciones-usuario">
+            <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+        </div>
+    </nav>
+</header>
 
-    <header>
-        <nav>
-            <div class="logo">
-                <span class="logo-nombre">Gas El Volcán</span>
-            </div>
-            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
-            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
-            <ul class="menu-principal">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="productos.html">Productos</a></li>
-                <li><a href="nosotros.html">Nosotros</a></li>
-                <li><a href="blogs.html">Blogs</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-            <div class="acciones-usuario">
-                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
-            </div>
-        </nav>
-    </header>
+<main style="max-width:400px; margin: 40px auto;">
+    <h1 style="text-align:center;">Iniciar Sesión</h1>
+    <h2 style="text-align:center; font-size: 1.2em;">Distribuidora Gas El Volcán</h2>
+    
+    <form id="formLogin" style="display:flex; flex-direction:column; gap:15px; margin-top:20px;">
+        <label>Correo:
+            <input type="email" id="correo" required style="width:100%; padding:8px;">
+        </label>
+        <label>Contraseña:
+            <input type="password" id="password" required style="width:100%; padding:8px;">
+        </label>
+        <button type="submit" style="padding:10px; background:#c0392b; color:white; border:none; cursor:pointer;">Ingresar</button>
+        <p id="mensaje" style="color:red;"></p>
+    </form>
+    <p style="text-align:center; margin-top:15px;"><a href="registro.html">¿No tienes cuenta? Regístrate</a></p>
+</main>
 
-    <main>
-        <!-- TODO: logo grande + nombre empresa (según mockup Figura 5) -->
-        <!-- TODO: formulario de login (correo, contraseña) -->
-    </main>
+<footer><p>&copy; 2026 Distribuidora Gas El Volcán</p></footer>
 
-    <footer>
-        <p>&copy; 2026 Distribuidora Gas El Volcán</p>
-    </footer>
+<script>
+document.getElementById('formLogin').addEventListener('submit', function(e){
+    e.preventDefault();
+    const correo = document.getElementById('correo').value;
+    const pass = document.getElementById('password').value;
 
+    // Admin fijo para la evaluación
+    if(correo === 'admin@gaselvolcan.cl' && pass === 'admin123'){
+        localStorage.setItem('usuarioLogueado', JSON.stringify({correo, rol: 'admin'}));
+        window.location.href = 'admin/usuarios.html';
+    } else {
+        // Busca usuarios registrados
+        const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+        const encontrado = usuarios.find(u => u.correo === correo && u.password === pass);
+        if(encontrado){
+            localStorage.setItem('usuarioLogueado', JSON.stringify(encontrado));
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('mensaje').innerText = 'Correo o contraseña incorrectos';
+        }
+    }
+});
+</script>
 </body>
 </html>
