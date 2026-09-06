@@ -2,19 +2,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Admin Productos</title>
-<link rel="stylesheet" href="../css/estilos.css">
-<link rel="stylesheet" href="../css/admin.css">
+<title>Admin - Productos</title>
 </head>
 <body>
 <h1>Admin - Productos</h1>
-<a href="home.html">Inicio Admin</a> |
+<a href="index.html">Inicio Admin</a> |
 <a href="producto-nuevo.html">Agregar Producto</a> |
 <a href="usuarios.html">Usuarios</a>
-
-<table border="1" style="margin-top:20px; width:80%">
-<thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr></thead>
-<tbody id="cuerpoTabla"></tbody>
+<br><br>
+<table border="1" cellpadding="10">
+<thead>
+<tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr>
+</thead>
+<tbody id="tabla-productos"></tbody>
 </table>
 
 <script src="../js/productos-data.js"></script>
