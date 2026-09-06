@@ -2,7 +2,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Usuarios</title>
+<link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
 
@@ -14,31 +16,45 @@
 <br><br>
 <a href="usuario-nuevo.html"><button>Agregar Usuario</button></a>
 
-<table border="1" style="width:70%; margin-top:20px;">
+<table border="1" style="width:95%; margin-top:20px;" cellpadding="8">
 <thead>
-<tr><th>Correo</th><th>Rol</th><th>Acción</th></tr>
+<tr><th>RUN</th><th>Nombre</th><th>Correo</th><th>Tipo</th><th>Acciones</th></tr>
 </thead>
 <tbody id="cuerpoUsuarios"></tbody>
 </table>
 
 <script>
-var usuarios = [
-    {correo: "admin@gaselvolcan.cl", pass: "admin123", rol: "admin"}
+var usuariosBase = [
+    {run:"11111111-1", nombre:"Admin", apellidos:"Gas El Volcan", correo:"admin@gaselvolcan.cl", pass:"admin123", tipo:"admin", rol:"admin"}
 ];
 
-var g = localStorage.getItem("usuarios");
-if(g!= null){
-    usuarios = JSON.parse(g);
-} else {
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-}
+var usuarios = usuariosBase;
+try{
+    var g = localStorage.getItem("usuarios");
+    if(g){
+        var temp = JSON.parse(g);
+        if(temp && temp.length > 0) usuarios = temp;
+    } else {
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    }
+}catch(e){}
 
 function mostrar(){
     var cuerpo = document.getElementById("cuerpoUsuarios");
     cuerpo.innerHTML = "";
     for(var i=0; i < usuarios.length; i++){
-        cuerpo.innerHTML += "<tr><td>"+usuarios[i].correo+"</td><td>"+usuarios[i].rol+"</td><td><button onclick='eliminar("+i+")'>Eliminar</button></td></tr>";
+        var u = usuarios[i];
+        var correo = u.correo || "sin correo";
+        var tipo = u.tipo || u.rol || "cliente";
+        var nombre = (u.nombre || "") + " " + (u.apellidos || "");
+        var run = u.run || "-";
+        cuerpo.innerHTML += "<tr><td>"+run+"</td><td>"+nombre.trim()+"</td><td>"+correo+"</td><td>"+tipo+"</td><td><button onclick='editar("+i+")'>Editar</button> <button onclick='eliminar("+i+")'>Eliminar</button></td></tr>";
     }
+}
+
+function editar(i){
+    localStorage.setItem("indiceUsuarioEditar", i);
+    window.location.href = "usuario-editar.html";
 }
 
 function eliminar(i){
@@ -46,9 +62,11 @@ function eliminar(i){
         alert("No se puede eliminar el admin principal");
         return;
     }
-    usuarios.splice(i,1);
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    mostrar();
+    if(confirm("¿Eliminar usuario "+usuarios[i].correo+"?")){
+        usuarios.splice(i,1);
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        mostrar();
+    }
 }
 
 mostrar();
