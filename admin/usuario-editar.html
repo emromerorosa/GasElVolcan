@@ -1,4 +1,82 @@
-    <main class="admin-contenido">
-        <h1>Editar Usuario</h1>
-        <!-- TODO: formulario usuario (RUN, nombre, apellidos, correo, fecha nacimiento, tipo usuario, región, comuna, dirección) -->
-    </main>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Editar Usuario</title>
+<link rel="stylesheet" href="../css/estilos.css">
+<link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+
+<h1>Editar Usuario</h1>
+<a href="usuarios.html">Volver</a>
+<br><br>
+
+RUN:<br>
+<input type="text" id="run"><br><br>
+
+Nombre:<br>
+<input type="text" id="nombre"><br><br>
+
+Apellidos:<br>
+<input type="text" id="apellidos"><br><br>
+
+Correo:<br>
+<input type="email" id="correo"><br><br>
+
+Fecha Nacimiento:<br>
+<input type="date" id="fecha"><br><br>
+
+Tipo Usuario:<br>
+<select id="tipo">
+  <option value="cliente">Cliente</option>
+  <option value="admin">Admin</option>
+  <option value="vendedor">Vendedor</option>
+</select><br><br>
+
+Región:<br>
+<input type="text" id="region"><br><br>
+
+Comuna:<br>
+<input type="text" id="comuna"><br><br>
+
+Dirección:<br>
+<input type="text" id="direccion"><br><br>
+
+<button onclick="guardarUsuario()">Guardar Cambios</button>
+
+<script>
+var indice = localStorage.getItem("indiceUsuarioEditar");
+var usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+var usuario = usuarios[indice];
+
+document.getElementById("run").value = usuario.run;
+document.getElementById("nombre").value = usuario.nombre;
+document.getElementById("apellidos").value = usuario.apellidos;
+document.getElementById("correo").value = usuario.correo;
+document.getElementById("fecha").value = usuario.fecha;
+document.getElementById("tipo").value = usuario.tipo;
+document.getElementById("region").value = usuario.region;
+document.getElementById("comuna").value = usuario.comuna;
+document.getElementById("direccion").value = usuario.direccion;
+
+function guardarUsuario(){
+  usuario.run = document.getElementById("run").value;
+  usuario.nombre = document.getElementById("nombre").value;
+  usuario.apellidos = document.getElementById("apellidos").value;
+  usuario.correo = document.getElementById("correo").value;
+  usuario.fecha = document.getElementById("fecha").value;
+  usuario.tipo = document.getElementById("tipo").value;
+  usuario.region = document.getElementById("region").value;
+  usuario.comuna = document.getElementById("comuna").value;
+  usuario.direccion = document.getElementById("direccion").value;
+
+  usuarios[indice] = usuario;
+  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+  alert("Usuario editado");
+  window.location.href = "usuarios.html";
+}
+</script>
+
+</body>
+</html>
