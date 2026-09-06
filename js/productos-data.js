@@ -1,17 +1,188 @@
+// Arreglo con los productos reales del catálogo de la Distribuidora Gas El Volcán
 const PRODUCTOS = [
-  {codigo:"GAS5", nombre:"Gas 5kg", precioResidencial:12000, precio:12000, categoria:"Residencial", descripcion:"Balon de gas de 5kg ideal para camping.", imagen:"../img/gas5.jpg"},
-  {codigo:"GAS15", nombre:"Gas 15kg", precioResidencial:25000, precio:25000, categoria:"Residencial", descripcion:"Balon de gas de 15kg uso domestico.", imagen:"../img/gas15.jpg"},
-  {codigo:"GAS45", nombre:"Gas 45kg", precioResidencial:65000, precio:65000, categoria:"Industrial", descripcion:"Balon de gas de 45kg uso industrial.", imagen:"../img/gas45.jpg"},
-  {codigo:"GAS11", nombre:"Gas 11kg", precioResidencial:20000, precio:20000, categoria:"Residencial", descripcion:"Balon de gas de 11kg.", imagen:"../img/gas11.jpg"}
+    {
+        codigo: "CL001",
+        categoria: "Cilindros de Gas",
+        nombre: "Cilindro GLP 5 kg",
+        descripcion: "Cilindro de gas licuado de petróleo 5 kg. Para uso residencial (cocina, calefacción pequeña)",
+        unidad: "Unidad",
+        precioResidencial: 6500,
+        precioComercial: 6000,
+        stock: 80,
+        stockCritico: 16,
+        imagen: "img/cilindro-5kg.jpg"
+    },
+    {
+        codigo: "CL002",
+        categoria: "Cilindros de Gas",
+        nombre: "Cilindro GLP 11 kg",
+        descripcion: "Cilindro estándar doméstico. El más utilizado en hogares chilenos. Compatible con reguladores estándar",
+        unidad: "Unidad",
+        precioResidencial: 12000,
+        precioComercial: 11000,
+        stock: 200,
+        stockCritico: 40,
+        imagen: "img/cilindro-11kg.jpg"
+    },
+    {
+        codigo: "CL003",
+        categoria: "Cilindros de Gas",
+        nombre: "Cilindro GLP 15 kg",
+        descripcion: "Cilindro de mayor capacidad para hogares de alto consumo o locales pequeños",
+        unidad: "Unidad",
+        precioResidencial: 16000,
+        precioComercial: 14500,
+        stock: 90,
+        stockCritico: 18,
+        imagen: "img/cilindro-15kg.jpg"
+    },
+    {
+        codigo: "CL004",
+        categoria: "Cilindros de Gas",
+        nombre: "Cilindro GLP 45 kg",
+        descripcion: "Cilindro industrial. Uso comercial: restaurantes, talleres, calefacción de locales",
+        unidad: "Unidad",
+        precioResidencial: 45000,
+        precioComercial: 40000,
+        stock: 30,
+        stockCritico: 6,
+        imagen: "img/cilindro-45kg.jpg"
+    },
+    {
+        codigo: "RG001",
+        categoria: "Reguladores",
+        nombre: "Regulador doméstico estándar",
+        descripcion: "Regulador de 1 etapa para cilindros 5, 11 y 15 kg. Presión de salida 28 mbar",
+        unidad: "Unidad",
+        precioResidencial: 8990,
+        precioComercial: 8200,
+        stock: 45,
+        stockCritico: 9,
+        imagen: "img/regulador-domestico.jpg"
+    },
+    {
+        codigo: "RG002",
+        categoria: "Reguladores",
+        nombre: "Regulador de alta presión",
+        descripcion: "Regulador para cocinas industriales o equipos de mayor consumo. Presión regulable",
+        unidad: "Unidad",
+        precioResidencial: 18990,
+        precioComercial: 17000,
+        stock: 12,
+        stockCritico: 3,
+        imagen: "img/regulador-de-alta-presion.jpg"
+    },
+    {
+        codigo: "RG003",
+        categoria: "Reguladores",
+        nombre: "Regulador dual (2 salidas)",
+        descripcion: "Permite conectar dos artefactos simultáneamente al mismo cilindro",
+        unidad: "Unidad",
+        precioResidencial: 14990,
+        precioComercial: 13500,
+        stock: 18,
+        stockCritico: 4,
+        imagen: "img/regulador-dual.jpg"
+    },
+    {
+        codigo: "MG001",
+        categoria: "Mangueras y Conexiones",
+        nombre: "Manguera gas 1.5m",
+        descripcion: "Manguera flexible homologada. Diámetro interior 9mm. Compatible con reguladores estándar",
+        unidad: "Unidad",
+        precioResidencial: 3990,
+        precioComercial: 3500,
+        stock: 80,
+        stockCritico: 16,
+        imagen: "img/manguera-gas.jpg"
+    },
+    {
+        codigo: "MG002",
+        categoria: "Mangueras y Conexiones",
+        nombre: "Manguera gas 3m",
+        descripcion: "Manguera larga para instalaciones donde el artefacto está alejado del cilindro",
+        unidad: "Unidad",
+        precioResidencial: 6990,
+        precioComercial: 6200,
+        stock: 50,
+        stockCritico: 10,
+        imagen: "img/manguera-gas-3m.jpg"
+    },
+    {
+        codigo: "MG003",
+        categoria: "Mangueras y Conexiones",
+        nombre: "Abrazadera metálica",
+        descripcion: "Abrazadera de acero para asegurar la conexión manguera-regulador y manguera-artefacto",
+        unidad: "Unidad",
+        precioResidencial: 990,
+        precioComercial: 800,
+        stock: 200,
+        stockCritico: 40,
+        imagen: "img/abrazadera-metalica.jpg"
+    },
+    {
+        codigo: "MG004",
+        categoria: "Mangueras y Conexiones",
+        nombre: "Kit conexión completo (regulador + manguera 1.5m + abrazaderas)",
+        descripcion: "Todo lo necesario para instalar un cilindro nuevo",
+        unidad: "Kit",
+        precioResidencial: 12990,
+        precioComercial: 11500,
+        stock: 25,
+        stockCritico: 5,
+        imagen: "img/kit-conexion.jpg"
+    },
+    {
+        codigo: "AC001",
+        categoria: "Accesorios",
+        nombre: "Carro porta cilindro 11/15kg",
+        descripcion: "Carro metálico con ruedas para transportar cilindros dentro del hogar con seguridad",
+        unidad: "Unidad",
+        precioResidencial: 12990,
+        precioComercial: 11000,
+        stock: 20,
+        stockCritico: 4,
+        imagen: "img/carro-gas.jpg"
+    },
+    {
+        codigo: "AC002",
+        categoria: "Accesorios",
+        nombre: "Tapa protectora para válvula",
+        descripcion: "Tapa de plástico ABS para proteger la válvula del cilindro durante el transporte",
+        unidad: "Unidad",
+        precioResidencial: 1490,
+        precioComercial: 1200,
+        stock: 60,
+        stockCritico: 12,
+        imagen: "img/tapa-gas.jpg"
+    },
+    {
+        codigo: "AC003",
+        categoria: "Accesorios",
+        nombre: "Detector de gas a batería",
+        descripcion: "Sensor electroquímico. Alarma sonora y visual ante fuga de gas GLP o metano",
+        unidad: "Unidad",
+        precioResidencial: 19990,
+        precioComercial: 17000,
+        stock: 8,
+        stockCritico: 2,
+        imagen: "img/detector-gas.jpg"
+    }
 ];
 
-function obtenerImagenHtml(producto, clase){
-  if(!producto) return "";
-  var src = producto.imagen || "../img/no-imagen.jpg";
-  return '<img src="'+src+'" alt="'+producto.nombre+'" class="'+clase+'" style="max-width:150px;">';
-}
+// Ícono de respaldo por categoría, usado cuando un producto no tiene imagen asignada
+const ICONOS_POR_CATEGORIA = {
+  "Cilindros de Gas": "🔥",
+  "Reguladores": "🔧",
+  "Mangueras y Conexiones": "🔌",
+  "Accesorios": "🛠️"
+};
 
-// para que admin-productos pueda leer tambien
-if(!localStorage.getItem("productos")){
-  localStorage.setItem("productos", JSON.stringify(PRODUCTOS));
+// Devuelve el HTML de la imagen de un producto: una <img> real si tiene foto asignada,
+// o el ícono de su categoría si no
+function obtenerImagenHtml(producto, clase) {
+  if (producto.imagen) {
+    return `<img class="${clase}" src="${producto.imagen}" alt="${producto.nombre}">`;
+  }
+  return `<div class="${clase}">${ICONOS_POR_CATEGORIA[producto.categoria]}</div>`;
 }
