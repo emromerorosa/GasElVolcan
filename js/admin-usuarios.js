@@ -1,12 +1,19 @@
-var usuarios = [
-    {correo: "admin@gaselvolcan.cl", pass: "admin123", rol: "admin"}
+var usuariosBase = [
+    {run:"11111111-1", nombre:"Admin", apellidos:"Gas El Volcan", correo:"admin@gaselvolcan.cl", pass:"admin123", tipo:"admin", rol:"admin", fecha:"", region:"", comuna:"", direccion:""}
 ];
 
-var g = localStorage.getItem("usuarios");
-if(g!= null){
-    usuarios = JSON.parse(g);
-} else {
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+var usuarios = usuariosBase;
+
+try{
+    var g = localStorage.getItem("usuarios");
+    if(g!= null){
+        var temp = JSON.parse(g);
+        if(temp && temp.length > 0) usuarios = temp;
+    } else {
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    }
+}catch(e){
+    usuarios = usuariosBase;
 }
 
 function mostrarUsuarios(){
@@ -14,8 +21,18 @@ function mostrarUsuarios(){
     if(cuerpo == null) return;
     cuerpo.innerHTML = "";
     for(var i=0; i < usuarios.length; i++){
-        cuerpo.innerHTML += "<tr><td>"+usuarios[i].correo+"</td><td>"+usuarios[i].rol+"</td><td><button onclick='eliminarUsuario("+i+")'>Eliminar</button></td></tr>";
+        var u = usuarios[i];
+        var run = u.run || "-";
+        var nombre = (u.nombre || "") + " " + (u.apellidos || "");
+        var correo = u.correo || "";
+        var tipo = u.tipo || u.rol || "cliente";
+        cuerpo.innerHTML += "<tr><td>"+run+"</td><td>"+nombre.trim()+"</td><td>"+correo+"</td><td>"+tipo+"</td><td><button onclick='editarUsuario("+i+")'>Editar</button> <button onclick='eliminarUsuario("+i+")'>Eliminar</button></td></tr>";
     }
+}
+
+function editarUsuario(i){
+    localStorage.setItem("indiceUsuarioEditar", i);
+    window.location.href = "usuario-editar.html";
 }
 
 function eliminarUsuario(i){
@@ -23,9 +40,11 @@ function eliminarUsuario(i){
         alert("No se puede eliminar admin principal");
         return;
     }
-    usuarios.splice(i,1);
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-    mostrarUsuarios();
+    if(confirm("¿Eliminar "+usuarios[i].correo+"?")){
+        usuarios.splice(i,1);
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        mostrarUsuarios();
+    }
 }
 
 mostrarUsuarios();
