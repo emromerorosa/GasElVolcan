@@ -1,3 +1,4 @@
+// Arreglo con los productos reales del catálogo de la Distribuidora Gas El Volcán
 const PRODUCTOS = [
     {
         codigo: "CL001",
@@ -9,7 +10,7 @@ const PRODUCTOS = [
         precioComercial: 6000,
         stock: 80,
         stockCritico: 16,
-        imagen: ""
+        imagen: "img/cilindro-5kg.jpg"
     },
     {
         codigo: "CL002",
@@ -21,7 +22,7 @@ const PRODUCTOS = [
         precioComercial: 11000,
         stock: 200,
         stockCritico: 40,
-        imagen: ""
+        imagen: "img/cilindro-11kg.jpg"
     },
     {
         codigo: "CL003",
@@ -33,7 +34,7 @@ const PRODUCTOS = [
         precioComercial: 14500,
         stock: 90,
         stockCritico: 18,
-        imagen: ""
+        imagen: "img/cilindro-15kg.jpg"
     },
     {
         codigo: "CL004",
@@ -45,7 +46,7 @@ const PRODUCTOS = [
         precioComercial: 40000,
         stock: 30,
         stockCritico: 6,
-        imagen: ""
+        imagen: "img/cilindro-45kg.jpg"
     },
     {
         codigo: "RG001",
@@ -57,7 +58,7 @@ const PRODUCTOS = [
         precioComercial: 8200,
         stock: 45,
         stockCritico: 9,
-        imagen: ""
+        imagen: "img/regulador-domestico.jpg"
     },
     {
         codigo: "RG002",
@@ -69,7 +70,7 @@ const PRODUCTOS = [
         precioComercial: 17000,
         stock: 12,
         stockCritico: 3,
-        imagen: ""
+        imagen: "img/regulador-de-alta-presion.jpg"
     },
     {
         codigo: "RG003",
@@ -81,7 +82,7 @@ const PRODUCTOS = [
         precioComercial: 13500,
         stock: 18,
         stockCritico: 4,
-        imagen: ""
+        imagen: "img/regulador-dual.jpg"
     },
     {
         codigo: "MG001",
@@ -93,7 +94,7 @@ const PRODUCTOS = [
         precioComercial: 3500,
         stock: 80,
         stockCritico: 16,
-        imagen: ""
+        imagen: "img/manguera-gas.jpg"
     },
     {
         codigo: "MG002",
@@ -105,7 +106,7 @@ const PRODUCTOS = [
         precioComercial: 6200,
         stock: 50,
         stockCritico: 10,
-        imagen: ""
+        imagen: "img/manguera-gas-3m.jpg"
     },
     {
         codigo: "MG003",
@@ -117,7 +118,7 @@ const PRODUCTOS = [
         precioComercial: 800,
         stock: 200,
         stockCritico: 40,
-        imagen: ""
+        imagen: "img/abrazadera-metalica.jpg"
     },
     {
         codigo: "MG004",
@@ -129,7 +130,7 @@ const PRODUCTOS = [
         precioComercial: 11500,
         stock: 25,
         stockCritico: 5,
-        imagen: ""
+        imagen: "img/kit-conexion.jpg"
     },
     {
         codigo: "AC001",
@@ -141,7 +142,7 @@ const PRODUCTOS = [
         precioComercial: 11000,
         stock: 20,
         stockCritico: 4,
-        imagen: ""
+        imagen: "img/carro-gas.jpg"
     },
     {
         codigo: "AC002",
@@ -153,7 +154,7 @@ const PRODUCTOS = [
         precioComercial: 1200,
         stock: 60,
         stockCritico: 12,
-        imagen: ""
+        imagen: "img/tapa-gas.jpg"
     },
     {
         codigo: "AC003",
@@ -165,6 +166,23 @@ const PRODUCTOS = [
         precioComercial: 17000,
         stock: 8,
         stockCritico: 2,
-        imagen: ""
+        imagen: "img/detector-gas.jpg"
     }
 ];
+
+// Ícono de respaldo por categoría, usado cuando un producto no tiene imagen asignada
+const ICONOS_POR_CATEGORIA = {
+  "Cilindros de Gas": "🔥",
+  "Reguladores": "🔧",
+  "Mangueras y Conexiones": "🔌",
+  "Accesorios": "🛠️"
+};
+
+// Devuelve el HTML de la imagen de un producto: una <img> real si tiene foto asignada,
+// o el ícono de su categoría si no
+function obtenerImagenHtml(producto, clase) {
+  if (producto.imagen) {
+    return `<img class="${clase}" src="${producto.imagen}" alt="${producto.nombre}">`;
+  }
+  return `<div class="${clase}">${ICONOS_POR_CATEGORIA[producto.categoria]}</div>`;
+}

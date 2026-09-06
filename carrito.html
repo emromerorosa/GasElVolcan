@@ -1,5 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carrito - Distribuidora Gas El Volcán</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <!-- TODO: logo + nombre del sitio -->
+                <span class="logo-nombre">Gas El Volcán</span>
+            </div>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
+            <ul class="menu-principal">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+
+            <div class="acciones-usuario">
+                <a href="login.html">Iniciar sesión</a>
+                <a href="registro.html">Registrar usuario</a>
+                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+            </div>
+        </nav>
+    </header>
     <main>
         <h2>Mi carrito de compras</h2>
-        <!-- TODO: listado de productos en el carrito (imagen, nombre, precio, cantidad +/-) -->
-        <!-- TODO: total, cupón de descuento, botón "Pagar" -->
+
+        <table id="tablaCarrito">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="cuerpoCarrito">
+        </tbody>
+        </table>
+
+        <p>Total: $<span id="totalCarrito">0</span></p>
+
+        <button id="botonPagar" type="button" class="btn-primario">Pagar</button>
+
+        <p id="carritoVacio">Tu carrito está vacío.</p>
     </main>
+<footer>
+            <p>&copy; 2026 Distribuidora Gas El Volcán</p>
+            <!-- TODO: datos de contacto / redes -->
+    </footer>
+    <script src="js/productos-data.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/carrito-pagina.js"></script>
+</body>
+</html>
