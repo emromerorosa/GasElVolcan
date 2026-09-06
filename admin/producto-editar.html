@@ -1,4 +1,46 @@
-    <main class="admin-contenido">
-        <h1>Editar Producto</h1>
-        <!-- TODO: formulario producto (código, nombre, descripción, precio, stock, stock crítico, categoría, imagen) -->
-    </main>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Editar Producto</title>
+</head>
+<body>
+
+<h1>Editar Producto</h1>
+<a href="productos.html">Volver</a>
+<br><br>
+
+Nombre: <br>
+<input type="text" id="nombre"><br><br>
+
+Precio: <br>
+<input type="number" id="precio"><br><br>
+
+Stock: <br>
+<input type="number" id="stock"><br><br>
+
+<button onclick="guardarEdicion()">Guardar Cambios</button>
+
+<script src="../js/productos-data.js"></script>
+<script>
+var indice = localStorage.getItem("indiceEditar");
+var producto = productos[indice];
+
+document.getElementById("nombre").value = producto.nombre;
+document.getElementById("precio").value = producto.precio;
+document.getElementById("stock").value = producto.stock;
+
+function guardarEdicion(){
+  producto.nombre = document.getElementById("nombre").value;
+  producto.precio = parseInt(document.getElementById("precio").value);
+  producto.stock = parseInt(document.getElementById("stock").value);
+
+  productos[indice] = producto;
+  localStorage.setItem("productos", JSON.stringify(productos));
+  alert("Producto editado");
+  window.location.href = "productos.html";
+}
+</script>
+
+</body>
+</html>
