@@ -17,10 +17,15 @@ if(guardado){
 var tabla = document.getElementById("tabla-productos");
 tabla.innerHTML = "";
 for(var i=0; i<productos.length; i++){
-    tabla.innerHTML += "<tr><td>"+productos[i].id+"</td><td>"+productos[i].nombre+"</td><td>"+productos[i].precio+"</td><td>"+productos[i].stock+"</td><td><button onclick='editar("+i+")'>Editar</button> <button onclick='eliminar("+i+")'>Eliminar</button></td></tr>";
+    var idMostrar = productos[i].id || (i+1);
+    tabla.innerHTML += "<tr><td>"+idMostrar+"</td><td>"+productos[i].nombre+"</td><td>"+productos[i].precio+"</td><td>"+productos[i].stock+"</td><td><button onclick='editar("+i+")'>Editar</button> <button onclick='eliminar("+i+")'>Eliminar</button></td></tr>";
 }
 
-function editar(i){ localStorage.setItem("indiceEditar", i); window.location.href = "producto-editar.html"; }
+function editar(i){
+    localStorage.setItem("indiceEditar", i);
+    window.location.href = "producto-editar.html";
+}
+
 function eliminar(i){
     if(confirm("¿Eliminar?")){
         productos.splice(i,1);
