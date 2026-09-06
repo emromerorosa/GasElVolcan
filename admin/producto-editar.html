@@ -1,72 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Editar Producto</title>
-<link rel="stylesheet" href="../css/estilos.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto - Gas El Volcán</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
 
-<h1>Editar Producto</h1>
-<a href="productos.html">Volver</a>
-<br><br>
+    <div class="admin-layout">
 
-ID: <span id="id"></span><br><br>
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <span>Gas El Volcán</span>
+            </div>
+            <ul class="admin-menu">
+                <li><a href="home.html">Dashboard</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="usuarios.html">Usuarios</a></li>
+            </ul>
+        </aside>
 
-Nombre: <br>
-<input type="text" id="nombre"><br><br>
+        <main class="admin-contenido">
+            <h1>Editar Producto</h1>
 
-Precio: <br>
-<input type="number" id="precio"><br><br>
+            <form id="formProductoEditar" novalidate>
 
-Stock: <br>
-<input type="number" id="stock"><br><br>
+                <div class="form-group">
+                    <label for="codigo">Código</label>
+                    <input type="text" id="codigo" name="codigo" autocomplete="off" readonly>
+                    <span class="error-mensaje" id="errorCodigo"></span>
+                </div>
 
-<button onclick="guardarEdicion()">Guardar Cambios</button>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" autocomplete="off">
+                    <span class="error-mensaje" id="errorNombre"></span>
+                </div>
 
-<script>
-var productosBase = [
-    {id: 1, nombre: "Gas 5kg", precio: 12000, stock: 30},
-    {id: 2, nombre: "Gas 15kg", precio: 25000, stock: 50},
-    {id: 3, nombre: "Gas 45kg", precio: 65000, stock: 20}
-];
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" autocomplete="off"></textarea>
+                    <span class="error-mensaje" id="errorDescripcion"></span>
+                </div>
 
-var productos = productosBase;
-try {
-    var guardado = localStorage.getItem("productos");
-    if(guardado){
-        var temp = JSON.parse(guardado);
-        if(temp && temp.length > 0) productos = temp;
-    }
-} catch(e){}
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select id="categoria" name="categoria">
+                        <option value="">Seleccione una categoría</option>
+                        <option value="Cilindros de Gas">Cilindros de Gas</option>
+                        <option value="Reguladores">Reguladores</option>
+                        <option value="Mangueras y Conexiones">Mangueras y Conexiones</option>
+                        <option value="Accesorios">Accesorios</option>
+                    </select>
+                    <span class="error-mensaje" id="errorCategoria"></span>
+                </div>
 
-var indice = localStorage.getItem("indiceEditar");
+                <div class="form-group">
+                    <label for="unidad">Unidad</label>
+                    <select id="unidad" name="unidad">
+                        <option value="">Seleccione</option>
+                        <option value="Unidad">Unidad</option>
+                        <option value="Kit">Kit</option>
+                    </select>
+                    <span class="error-mensaje" id="errorUnidad"></span>
+                </div>
 
-if(indice === null ||!productos[indice]){
-    alert("No se seleccionó producto");
-    window.location.href = "productos.html";
-}
+                <div class="form-group">
+                    <label for="precioResidencial">Precio Residencial</label>
+                    <input type="number" id="precioResidencial" name="precioResidencial" min="0" step="1" autocomplete="off">
+                    <span class="error-mensaje" id="errorPrecioResidencial"></span>
+                </div>
 
-var producto = productos[indice];
+                <div class="form-group">
+                    <label for="precioComercial">Precio Comercial</label>
+                    <input type="number" id="precioComercial" name="precioComercial" min="0" step="1" autocomplete="off">
+                    <span class="error-mensaje" id="errorPrecioComercial"></span>
+                </div>
 
-document.getElementById("id").innerText = producto.id || (parseInt(indice)+1);
-document.getElementById("nombre").value = producto.nombre;
-document.getElementById("precio").value = producto.precio;
-document.getElementById("stock").value = producto.stock;
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" id="stock" name="stock" min="0" step="1" autocomplete="off">
+                    <span class="error-mensaje" id="errorStock"></span>
+                </div>
 
-function guardarEdicion(){
-  productos[indice].nombre = document.getElementById("nombre").value;
-  productos[indice].precio = parseInt(document.getElementById("precio").value);
-  productos[indice].stock = parseInt(document.getElementById("stock").value);
-  // mantenemos el id original
-  if(!productos[indice].id) productos[indice].id = parseInt(indice)+1;
+                <div class="form-group">
+                    <label for="stockCritico">Stock Crítico</label>
+                    <input type="number" id="stockCritico" name="stockCritico" min="0" step="1" autocomplete="off">
+                    <span class="error-mensaje" id="errorStockCritico"></span>
+                </div>
 
-  localStorage.setItem("productos", JSON.stringify(productos));
-  alert("Producto editado");
-  window.location.href = "productos.html";
-}
-</script>
+                <div class="form-group">
+                    <label for="imagen">Imagen</label>
+                    <input type="text" id="imagen" name="imagen" placeholder="img/nombre-archivo.jpg" autocomplete="off">
+                    <span class="error-mensaje" id="errorImagen"></span>
+                </div>
+
+                <button type="submit" class="btn-primario">Guardar Cambios</button>
+
+            </form>
+
+        </main>
+
+    </div>
+
+    <script src="../js/productos-data.js"></script>
+    <script src="../js/validaciones-comunes.js"></script>
+    <script src="../js/producto-editar.js"></script>
 
 </body>
 </html>
