@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin - Productos</title>
+<link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
 <h1>Admin - Productos</h1>
-<a href="index.html">Inicio Admin</a> |
+<a href="home.html">Inicio Admin</a> |
 <a href="producto-nuevo.html">Agregar Producto</a> |
 <a href="usuarios.html">Usuarios</a>
 <br><br>
@@ -17,7 +18,42 @@
 <tbody id="tabla-productos"></tbody>
 </table>
 
-<script src="../js/productos-data.js"></script>
-<script src="../js/admin-productos.js"></script>
+<script>
+var productosBase = [
+    {id: 1, nombre: "Gas 5kg", precio: 12000, stock: 30},
+    {id: 2, nombre: "Gas 15kg", precio: 25000, stock: 50},
+    {id: 3, nombre: "Gas 45kg", precio: 65000, stock: 20}
+];
+
+var productos = productosBase;
+try{
+    var guardado = localStorage.getItem("productos");
+    if(guardado){
+        var temp = JSON.parse(guardado);
+        if(temp && temp.length > 0) productos = temp;
+    }
+}catch(e){}
+
+var tbody = document.getElementById("tabla-productos");
+var filas = "";
+for(var i=0; i<productos.length; i++){
+    var p = productos[i];
+    var idMostrar = p.id || (i+1);
+    filas += "<tr><td>"+idMostrar+"</td><td>"+p.nombre+"</td><td>"+p.precio+"</td><td>"+p.stock+"</td><td><button onclick=\"editar("+i+")\">Editar</button> <button onclick=\"eliminar("+i+")\">Eliminar</button></td></tr>";
+}
+tbody.innerHTML = filas;
+
+function editar(i){
+    localStorage.setItem("indiceEditar", i);
+    window.location.href = "producto-editar.html";
+}
+function eliminar(i){
+    if(confirm("Eliminar?")){
+        productos.splice(i,1);
+        localStorage.setItem("productos", JSON.stringify(productos));
+        location.reload();
+    }
+}
+</script>
 </body>
 </html>
