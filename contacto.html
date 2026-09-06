@@ -1,3 +1,66 @@
-    <main>
-        <!-- TODO: formulario de contacto (nombre, correo, comentario) -->
-    </main>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto - Gas El Volcan</title>
+<link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+
+<h1>Contacto</h1>
+<a href="../index.html">Volver a Tienda</a>
+<br><br>
+
+<main>
+    <form id="formContacto" novalidate>
+        <label>Nombre:</label><br>
+        <input type="text" id="nombreContacto" maxlength="100" required>
+        <br><br>
+        
+        <label>Correo:</label><br>
+        <input type="email" id="correoContacto" maxlength="100" required>
+        <br><br>
+        
+        <label>Comentario:</label><br>
+        <textarea id="comentarioContacto" maxlength="500" rows="5" required></textarea>
+        <br><br>
+        
+        <button type="submit">Enviar Mensaje</button>
+    </form>
+    <p id="mensajeContacto"></p>
+</main>
+
+<script>
+document.getElementById("formContacto").addEventListener("submit", function(e){
+    e.preventDefault();
+    var nombre = document.getElementById("nombreContacto").value.trim();
+    var correo = document.getElementById("correoContacto").value.trim();
+    var comentario = document.getElementById("comentarioContacto").value.trim();
+    var mensaje = document.getElementById("mensajeContacto");
+
+    if(nombre.length == 0 || nombre.length > 100){
+        mensaje.textContent = "Nombre requerido (max 100 caracteres)";
+        return;
+    }
+    if(!correo.includes("@") || correo.length > 100){
+        mensaje.textContent = "Correo no valido";
+        return;
+    }
+    if(comentario.length == 0 || comentario.length > 500){
+        mensaje.textContent = "Comentario requerido (max 500 caracteres)";
+        return;
+    }
+
+    // simulamos envio
+    var contactos = JSON.parse(localStorage.getItem("mensajesContacto") || "[]");
+    contactos.push({nombre:nombre, correo:correo, comentario:comentario, fecha:new Date().toISOString()});
+    localStorage.setItem("mensajesContacto", JSON.stringify(contactos));
+
+    mensaje.textContent = "¡Mensaje enviado con exito! Nos contactaremos pronto.";
+    document.getElementById("formContacto").reset();
+});
+</script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 // Arreglo con los productos reales del catálogo de la Distribuidora Gas El Volcán
-const PRODUCTOS = [
+const PRODUCTOS_INICIALES = [
     {
         codigo: "CL001",
         categoria: "Cilindros de Gas",
@@ -169,6 +169,26 @@ const PRODUCTOS = [
         imagen: "img/detector-gas.jpg"
     }
 ];
+
+// Si ya existe un catálogo guardado en localStorage (por ejemplo, porque el panel de administración
+// agregó o editó un producto), se usa ese en vez del catálogo inicial. Si es la primera carga del
+// sitio y todavía no hay nada guardado, se usa el catálogo inicial y se guarda en localStorage
+// para que el panel de administración también pueda leerlo y modificarlo.
+let PRODUCTOS = PRODUCTOS_INICIALES;
+
+const productosGuardados = localStorage.getItem("productos");
+if (productosGuardados) {
+  try {
+    const parseado = JSON.parse(productosGuardados);
+    if (Array.isArray(parseado) && parseado.length > 0) {
+      PRODUCTOS = parseado;
+    }
+  } catch (e) {
+    console.error("Error leyendo productos guardados:", e);
+  }
+} else {
+  localStorage.setItem("productos", JSON.stringify(PRODUCTOS_INICIALES));
+}
 
 // Ícono de respaldo por categoría, usado cuando un producto no tiene imagen asignada
 const ICONOS_POR_CATEGORIA = {

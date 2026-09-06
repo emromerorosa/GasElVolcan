@@ -2,13 +2,27 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login - Gas El Volcán</title>
+<link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-<h1 style="text-align:center;">Iniciar Sesión</h1>
+<header>
+<nav>
+<div class="logo"><span>Gas El Volcán</span></div>
+<ul class="menu-principal">
+<li><a href="index.html">Home</a></li>
+<li><a href="productos.html">Productos</a></li>
+<li><a href="blogs.html">Blogs</a></li>
+<li><a href="contacto.html">Contacto</a></li>
+</ul>
+</nav>
+</header>
+
+<h1 style="text-align:center;margin-top:30px;">Iniciar Sesión</h1>
 <h3 style="text-align:center;">Distribuidora Gas El Volcán</h3>
 
-<div style="max-width:400px; margin:30px auto; border:1px solid #ccc; padding:20px;">
+<div style="max-width:400px; margin:30px auto; border:1px solid #ccc; padding:20px; border-radius:12px;">
 <form id="formLogin" style="display:flex; flex-direction:column; gap:15px;">
 <label>Correo:<br><input type="text" id="correo" required style="width:100%; padding:10px;"></label>
 <label>Contraseña:<br><input type="password" id="password" required style="width:100%; padding:10px;"></label>
@@ -16,6 +30,7 @@
 <p id="mensaje" style="color:red;"></p>
 </form>
 <p><b>Usa:</b> admin@gaselvolcan.cl / admin123</p>
+<a href="index.html">Volver al Home</a>
 </div>
 
 <script>
@@ -24,19 +39,12 @@ document.getElementById('formLogin').addEventListener('submit', function(e){
     let c = document.getElementById('correo').value.trim().toLowerCase();
     let p = document.getElementById('password').value.trim();
 
-    console.log("Intentando:", c, p);
-
-    // Acepta con o sin dominio para que no falle
     if( (c === 'admin@gaselvolcan.cl' || c === 'admin') && p === 'admin123'){
         localStorage.setItem('usuarioLogueado', JSON.stringify({correo:'admin@gaselvolcan.cl', rol:'admin'}));
-        window.location.href = 'admin/usuarios.html';
+        // Si tienes admin, cambia esto. Si no, mandalo al index
+        window.location.href = 'index.html'; 
     } else {
-        document.getElementById('mensaje').innerText = 'Datos: ' + c + ' / ' + p + ' -> Si pones admin@gaselvolcan.cl y admin123 debería entrar. Haz Ctrl+F5';
-        // Intento forzado igual si contiene admin
-        if(c.includes('admin') && p.includes('admin')){
-           localStorage.setItem('usuarioLogueado', JSON.stringify({correo:'admin@gaselvolcan.cl', rol:'admin'}));
-           setTimeout(()=>{ window.location.href = 'admin/usuarios.html'; }, 1000);
-        }
+        document.getElementById('mensaje').innerText = 'Correo o contraseña incorrectos';
     }
 });
 </script>

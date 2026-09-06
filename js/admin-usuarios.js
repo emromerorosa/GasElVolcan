@@ -1,47 +1,50 @@
-// Estructura oficial Acuerdo C+D - pág 2 guia_equipo.pdf
-const usuarios = [
-  { 
-    run: "12.345.678-9", 
-    nombre: "Juan", 
-    apellidos: "Pérez González", 
-    correo: "juan@gmail.com", 
-    fechaNacimiento: "1998-04-15",
-    tipoUsuario: "Cliente", 
-    region: "Ñuble", 
-    comuna: "Chillán", 
-    direccion: "Av. Libertad 123",
-    regionComunaOk: true
-  },
-  { 
-    run: "98.765.432-1", 
-    nombre: "María", 
-    apellidos: "Gómez Soto", 
-    correo: "maria@volcan.cl", 
-    fechaNacimiento: "1990-10-20",
-    tipoUsuario: "Administrador", 
-    region: "Ñuble", 
-    comuna: "Chillán Viejo", 
-    direccion: "Calle Prat 456",
-    regionComunaOk: true
-  }
+var usuariosBase = [
+    {run:"11111111-1", nombre:"Admin", apellidos:"Gas El Volcan", correo:"admin@gaselvolcan.cl", pass:"admin123", tipo:"admin", rol:"admin", fecha:"", region:"", comuna:"", direccion:""}
 ];
 
-const tablaUser = document.getElementById("tablaUsuariosBody");
+var usuarios = usuariosBase;
 
-if (tablaUser) {
-  usuarios.forEach(u => {
-    tablaUser.innerHTML += `
-      <tr>
-        <td>${u.run}</td>
-        <td>${u.nombre}</td>
-        <td>${u.apellidos}</td>
-        <td>${u.correo}</td>
-        <td>${u.tipoUsuario}</td>
-        <td><a href="usuario-editar.html?run=${u.run}">Editar</a></td>
-      </tr>
-    `;
-  });
+try{
+    var g = localStorage.getItem("usuarios");
+    if(g!= null){
+        var temp = JSON.parse(g);
+        if(temp && temp.length > 0) usuarios = temp;
+    } else {
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    }
+}catch(e){
+    usuarios = usuariosBase;
 }
 
+function mostrarUsuarios(){
+    var cuerpo = document.getElementById("cuerpoUsuarios");
+    if(cuerpo == null) return;
+    cuerpo.innerHTML = "";
+    for(var i=0; i < usuarios.length; i++){
+        var u = usuarios[i];
+        var run = u.run || "-";
+        var nombre = (u.nombre || "") + " " + (u.apellidos || "");
+        var correo = u.correo || "";
+        var tipo = u.tipo || u.rol || "cliente";
+        cuerpo.innerHTML += "<tr><td>"+run+"</td><td>"+nombre.trim()+"</td><td>"+correo+"</td><td>"+tipo+"</td><td><button onclick='editarUsuario("+i+")'>Editar</button> <button onclick='eliminarUsuario("+i+")'>Eliminar</button></td></tr>";
+    }
+}
 
-localStorage.setItem('usuarios', JSON.stringify(usuarios));
+function editarUsuario(i){
+    localStorage.setItem("indiceUsuarioEditar", i);
+    window.location.href = "usuario-editar.html";
+}
+
+function eliminarUsuario(i){
+    if(usuarios[i].correo == "admin@gaselvolcan.cl"){
+        alert("No se puede eliminar admin principal");
+        return;
+    }
+    if(confirm("¿Eliminar "+usuarios[i].correo+"?")){
+        usuarios.splice(i,1);
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        mostrarUsuarios();
+    }
+}
+
+mostrarUsuarios();

@@ -1,4 +1,72 @@
-    <main class="admin-contenido">
-        <h1>Editar Producto</h1>
-        <!-- TODO: formulario producto (código, nombre, descripción, precio, stock, stock crítico, categoría, imagen) -->
-    </main>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar Producto</title>
+<link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+
+<h1>Editar Producto</h1>
+<a href="productos.html">Volver</a>
+<br><br>
+
+ID: <span id="id"></span><br><br>
+
+Nombre: <br>
+<input type="text" id="nombre"><br><br>
+
+Precio: <br>
+<input type="number" id="precio"><br><br>
+
+Stock: <br>
+<input type="number" id="stock"><br><br>
+
+<button onclick="guardarEdicion()">Guardar Cambios</button>
+
+<script>
+var productosBase = [
+    {id: 1, nombre: "Gas 5kg", precio: 12000, stock: 30},
+    {id: 2, nombre: "Gas 15kg", precio: 25000, stock: 50},
+    {id: 3, nombre: "Gas 45kg", precio: 65000, stock: 20}
+];
+
+var productos = productosBase;
+try {
+    var guardado = localStorage.getItem("productos");
+    if(guardado){
+        var temp = JSON.parse(guardado);
+        if(temp && temp.length > 0) productos = temp;
+    }
+} catch(e){}
+
+var indice = localStorage.getItem("indiceEditar");
+
+if(indice === null ||!productos[indice]){
+    alert("No se seleccionó producto");
+    window.location.href = "productos.html";
+}
+
+var producto = productos[indice];
+
+document.getElementById("id").innerText = producto.id || (parseInt(indice)+1);
+document.getElementById("nombre").value = producto.nombre;
+document.getElementById("precio").value = producto.precio;
+document.getElementById("stock").value = producto.stock;
+
+function guardarEdicion(){
+  productos[indice].nombre = document.getElementById("nombre").value;
+  productos[indice].precio = parseInt(document.getElementById("precio").value);
+  productos[indice].stock = parseInt(document.getElementById("stock").value);
+  // mantenemos el id original
+  if(!productos[indice].id) productos[indice].id = parseInt(indice)+1;
+
+  localStorage.setItem("productos", JSON.stringify(productos));
+  alert("Producto editado");
+  window.location.href = "productos.html";
+}
+</script>
+
+</body>
+</html>

@@ -3,25 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Usuarios</title>
+    <title>Administrador - Usuarios</title>
     <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo"><span class="logo-nombre">Gas El Volcán - ADMIN</span></div>
-            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
-            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
-            <ul class="menu-principal">
-                <li><a href="../index.html">Home</a></li>
+
+    <div class="admin-layout">
+
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <span>Gas El Volcán</span>
+            </div>
+            <ul class="admin-menu">
+                <li><a href="home.html">Dashboard</a></li>
                 <li><a href="productos.html">Productos</a></li>
-                <li><a href="usuarios.html">Usuarios</a></li>
-                <li><a href="../nosotros.html">Nosotros</a></li>
-                <li><a href="../blogs.html">Blogs</a></li>
+                <li><a href="usuarios.html" class="activo">Usuarios</a></li>
+                <li><a href="../index.html">Cerrar Sesión</a></li>
             </ul>
-            <div class="acciones-usuario"><a href="../index.html">Salir</a></div>
-        </nav>
-    </header>
-    <main><h1>Gestión de Usuarios</h1></main>
+        </aside>
+
+        <main class="admin-contenido">
+            <div class="admin-header-seccion">
+                <h1>Usuarios</h1>
+                <a href="usuario-nuevo.html" class="btn-primario">Nuevo Usuario</a>
+            </div>
+
+            <table class="tabla-admin">
+                <thead>
+                    <tr>
+                        <th>RUN</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Tipo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoUsuarios"></tbody>
+            </table>
+        </main>
+
+    </div>
+
+    <script src="../js/admin-usuarios.js"></script>
 </body>
 </html>

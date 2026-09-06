@@ -1,4 +1,65 @@
-    <main class="admin-contenido">
-        <h1>Editar Usuario</h1>
-        <!-- TODO: formulario usuario (RUN, nombre, apellidos, correo, fecha nacimiento, tipo usuario, región, comuna, dirección) -->
-    </main>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Editar Usuario</title>
+</head>
+<body>
+
+<h1>Editar Usuario</h1>
+<a href="usuarios.html">Volver</a>
+<br><br>
+
+RUN:<br><input type="text" id="run"><br><br>
+Nombre:<br><input type="text" id="nombre"><br><br>
+Apellidos:<br><input type="text" id="apellidos"><br><br>
+Correo:<br><input type="email" id="correo"><br><br>
+Fecha:<br><input type="text" id="fecha"><br><br>
+Tipo:<br>
+<select id="tipo">
+  <option value="cliente">cliente</option>
+  <option value="admin">admin</option>
+</select><br><br>
+Region:<br><input type="text" id="region"><br><br>
+Comuna:<br><input type="text" id="comuna"><br><br>
+Direccion:<br><input type="text" id="direccion"><br><br>
+
+<button onclick="guardar()">Guardar Cambios</button>
+
+<script>
+var indice = localStorage.getItem("indiceUsuarioEditar");
+var usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+
+if(indice === null || usuarios.length === 0){
+  document.body.innerHTML += "<p style='color:red'>Entra desde Usuarios > Editar. Si entras directo no hay usuario cargado.</p>";
+} else {
+  var u = usuarios[indice];
+  document.getElementById("run").value = u.run || "";
+  document.getElementById("nombre").value = u.nombre || "";
+  document.getElementById("apellidos").value = u.apellidos || "";
+  document.getElementById("correo").value = u.correo || "";
+  document.getElementById("fecha").value = u.fecha || "";
+  document.getElementById("tipo").value = u.tipo || "cliente";
+  document.getElementById("region").value = u.region || "";
+  document.getElementById("comuna").value = u.comuna || "";
+  document.getElementById("direccion").value = u.direccion || "";
+}
+
+function guardar(){
+  usuarios[indice].run = document.getElementById("run").value;
+  usuarios[indice].nombre = document.getElementById("nombre").value;
+  usuarios[indice].apellidos = document.getElementById("apellidos").value;
+  usuarios[indice].correo = document.getElementById("correo").value;
+  usuarios[indice].fecha = document.getElementById("fecha").value;
+  usuarios[indice].tipo = document.getElementById("tipo").value;
+  usuarios[indice].region = document.getElementById("region").value;
+  usuarios[indice].comuna = document.getElementById("comuna").value;
+  usuarios[indice].direccion = document.getElementById("direccion").value;
+
+  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+  alert("Usuario editado");
+  window.location.href = "usuarios.html";
+}
+</script>
+</body>
+</html>
