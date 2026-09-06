@@ -1,3 +1,112 @@
-    <main>
-        <!-- TODO: formulario de contacto (nombre, correo, comentario) -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Distribuidora Gas El Volcán</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <!-- ENCABEZADO COMPARTIDO -->
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-nombre"><strong>Gas El Volcán</strong></span>
+            </div>
+
+            <!-- Botón menú hamburguesa para celulares -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+
+            <ul class="menu-principal">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+
+            <div class="acciones-usuario">
+                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL: CONTACTO -->
+    <main class="contenedor-auth">
+      <div class="auth-card">
+      
+        <div class="auth-header">
+          <div style="font-size: 3rem;">✉️</div>
+          <h2>Gas El Volcán</h2>
+          <p class="subtitulo">FORMULARIO DE CONTACTO</p>
+        </div>
+
+        <form id="formContacto" novalidate>
+        
+          <!-- Campo: Nombre Completo -->
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input 
+              type="text" 
+              id="nombre" 
+              name="nombre" 
+              maxlength="100" 
+              placeholder="Ej: Juan Pérez González"
+              required
+            >
+            <small class="mensaje-error" id="error-nombre"></small>
+          </div>
+
+          <!-- Campo: Correo Electrónico -->
+          <div class="form-group">
+            <label for="correo">Correo electrónico</label>
+            <input 
+              type="email" 
+              id="correo" 
+              name="correo" 
+              maxlength="100" 
+              placeholder="ejemplo@duoc.cl o @gmail.com"
+              required
+            >
+            <small class="mensaje-error" id="error-correo"></small>
+          </div>
+
+          <!-- Campo: Comentario / Mensaje -->
+          <div class="form-group">
+            <label for="comentario">Comentario o Consulta</label>
+            <textarea 
+              id="comentario" 
+              name="comentario" 
+              rows="5" 
+              maxlength="500" 
+              placeholder="Escribe tu mensaje aquí (máximo 500 caracteres)..."
+              required
+            ></textarea>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <small class="mensaje-error" id="error-comentario"></small>
+              <small id="contador-caracteres" style="color: #666; font-size: 0.8rem;">0 / 500</small>
+            </div>
+          </div>
+
+          <!-- Botón de envío -->
+          <button type="submit" class="btn-primario btn-block">Enviar Mensaje</button>
+
+          <!-- Mensaje general de resultado -->
+          <div id="mensaje-general" class="mensaje-alerta"></div>
+        </form>
+
+      </div>
     </main>
+
+    <!-- PIE DE PÁGINA COMPARTIDO -->
+    <footer>
+      <p>&copy; 2026 Distribuidora Gas El Volcán</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/carrito.js"></script>
+    <script src="js/contacto.js"></script>
+</body>
+</html>
