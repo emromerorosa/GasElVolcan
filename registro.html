@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Distribuidora Gas El Volcán - Registro</title>
+    <title>Registro - Gas El Volcán</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-
     <header>
         <nav>
-            <div class="logo">
-                <span class="logo-nombre">Gas El Volcán</span>
-            </div>
+            <div class="logo"><span class="logo-nombre">Gas El Volcán</span></div>
             <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
             <label for="menu-toggle" class="menu-toggle-btn">☰</label>
             <ul class="menu-principal">
@@ -28,14 +25,81 @@
         </nav>
     </header>
 
-    <main>
-        <!-- TODO: formulario de registro (nombre, correo, contraseña, confirmar contraseña, teléfono opcional) -->
-        <!-- TODO: select región + select comuna (dependientes entre sí) -->
+    <main style="max-width:500px;margin:40px auto;padding:20px;border:1px solid #ddd;border-radius:12px;">
+        <h1>Registrar Usuario</h1>
+        <form id="formRegistro" novalidate style="display:flex;flex-direction:column;gap:12px;">
+            <input type="text" id="nombre" placeholder="Nombre completo" maxlength="100" required style="padding:10px;">
+            <input type="email" id="correo" placeholder="Correo (ej: @duoc.cl, @profesor.duoc.cl, @gmail.com)" maxlength="100" required style="padding:10px;">
+            <input type="password" id="password" placeholder="Contraseña" minlength="4" maxlength="10" required style="padding:10px;">
+            <input type="password" id="confirmar" placeholder="Confirmar contraseña" required style="padding:10px;">
+            <input type="tel" id="telefono" placeholder="Teléfono opcional (ej: 912345678)" style="padding:10px;">
+
+            <select id="region" required style="padding:10px;">
+                <option value="">Seleccione Región</option>
+                <option value="Metropolitana">Metropolitana</option>
+                <option value="Biobio">Biobío</option>
+                <option value="Valparaiso">Valparaíso</option>
+            </select>
+            <select id="comuna" required style="padding:10px;">
+                <option value="">Seleccione Comuna</option>
+            </select>
+
+            <button type="submit" style="padding:12px;background:#c0392b;color:white;border:none;cursor:pointer;">Registrarse</button>
+            <p id="mensaje" style="color:red;"></p>
+        </form>
+        <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Distribuidora Gas El Volcán</p>
-    </footer>
+    <footer><p>&copy; 2026 Gas El Volcán</p></footer>
 
+<script>
+const comunasPorRegion = {
+    Metropolitana: ["Santiago","Puente Alto","Maipú","La Florida"],
+    Biobio: ["Concepción","Chillán","Los Ángeles"],
+    Valparaiso: ["Valparaíso","Viña del Mar","Quilpué"]
+};
+
+document.getElementById("region").addEventListener("change", function(){
+    const region = this.value;
+    const selectComuna = document.getElementById("comuna");
+    selectComuna.innerHTML = '<option value="">Seleccione Comuna</option>';
+    if(comunasPorRegion[region]){
+        comunasPorRegion[region].forEach(c => {
+            let opt = document.createElement("option");
+            opt.value = c; opt.textContent = c;
+            selectComuna.appendChild(opt);
+        });
+    }
+});
+
+document.getElementById("formRegistro").addEventListener("submit", function(e){
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const correo = document.getElementById("correo").value.trim().toLowerCase();
+    const pass = document.getElementById("password").value.trim();
+    const confirmar = document.getElementById("confirmar").value.trim();
+    const region = document.getElementById("region").value;
+    const comuna = document.getElementById("comuna").value;
+    const mensaje = document.getElementById("mensaje");
+
+    if(nombre.length==0 || nombre.length>100){ mensaje.textContent="Nombre requerido (max 100)"; return; }
+    if(!correo.includes("@") || correo.length>100 ||!correo.match(/@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/)){
+        mensaje.textContent="Correo debe ser @duoc.cl, @profesor.duoc.cl o @gmail.com"; return;
+    }
+    if(pass.length<4 || pass.length>10){ mensaje.textContent="Contraseña 4 a 10 caracteres"; return; }
+    if(pass!==confirmar){ mensaje.textContent="Contraseñas no coinciden"; return; }
+    if(!region ||!comuna){ mensaje.textContent="Seleccione región y comuna"; return; }
+
+    let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+    if(usuarios.find(u=>u.correo===correo)){ mensaje.textContent="Correo ya registrado"; return; }
+
+    usuarios.push({nombre, correo, password:pass, region, comuna});
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    mensaje.style.color="green";
+    mensaje.textContent="¡Registrado con éxito! Redirigiendo...";
+    setTimeout(()=>{ window.location.href="login.html"; }, 1000);
+});
+</script>
+<script src="js/index.js"></script>
 </body>
 </html>
