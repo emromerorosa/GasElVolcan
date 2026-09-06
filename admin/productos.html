@@ -1,59 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Admin - Productos</title>
-<link rel="stylesheet" href="../css/estilos.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Productos</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-<h1>Admin - Productos</h1>
-<a href="home.html">Inicio Admin</a> |
-<a href="producto-nuevo.html">Agregar Producto</a> |
-<a href="usuarios.html">Usuarios</a>
-<br><br>
-<table border="1" cellpadding="10">
-<thead>
-<tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock</th><th>Acciones</th></tr>
-</thead>
-<tbody id="tabla-productos"></tbody>
-</table>
 
-<script>
-var productosBase = [
-    {id: 1, nombre: "Gas 5kg", precio: 12000, stock: 30},
-    {id: 2, nombre: "Gas 15kg", precio: 25000, stock: 50},
-    {id: 3, nombre: "Gas 45kg", precio: 65000, stock: 20}
-];
+    <div class="admin-layout">
 
-var productos = productosBase;
-try{
-    var guardado = localStorage.getItem("productos");
-    if(guardado){
-        var temp = JSON.parse(guardado);
-        if(temp && temp.length > 0) productos = temp;
-    }
-}catch(e){}
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <span>Gas El Volcán</span>
+            </div>
+            <ul class="admin-menu">
+                <li><a href="home.html">Dashboard</a></li>
+                <li><a href="productos.html" class="activo">Productos</a></li>
+                <li><a href="usuarios.html">Usuarios</a></li>
+                <li><a href="../index.html">Cerrar Sesión</a></li>
+            </ul>
+        </aside>
 
-var tbody = document.getElementById("tabla-productos");
-var filas = "";
-for(var i=0; i<productos.length; i++){
-    var p = productos[i];
-    var idMostrar = p.id || (i+1);
-    filas += "<tr><td>"+idMostrar+"</td><td>"+p.nombre+"</td><td>"+p.precio+"</td><td>"+p.stock+"</td><td><button onclick=\"editar("+i+")\">Editar</button> <button onclick=\"eliminar("+i+")\">Eliminar</button></td></tr>";
-}
-tbody.innerHTML = filas;
+        <main class="admin-contenido">
+            <div class="admin-header-seccion">
+                <h1>Productos</h1>
+                <a href="producto-nuevo.html" class="btn-primario">Nuevo Producto</a>
+            </div>
 
-function editar(i){
-    localStorage.setItem("indiceEditar", i);
-    window.location.href = "producto-editar.html";
-}
-function eliminar(i){
-    if(confirm("Eliminar?")){
-        productos.splice(i,1);
-        localStorage.setItem("productos", JSON.stringify(productos));
-        location.reload();
-    }
-}
-</script>
+            <table class="tabla-admin">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio Residencial</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoProductosAdmin"></tbody>
+            </table>
+        </main>
+
+    </div>
+
+    <script src="../js/productos-data.js"></script>
+    <script src="../js/admin-productos.js"></script>
 </body>
 </html>
