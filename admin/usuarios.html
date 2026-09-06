@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Usuarios | Gas El Volcán</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <h2>Gas El Volcán</h2>
+      <nav class="admin-menu">
+        <a href="home.html">Dashboard</a>
+        <a href="productos.html">Productos</a>
+        <a href="usuarios.html">Usuarios</a>
+        <a href="../index.html">Ver Tienda</a>
+      </nav>
+    </aside>
+
+    <main class="admin-main">
+      <h1>Gestión de Usuarios</h1>
+      <table class="tabla-admin">
+        <thead>
+          <tr>
+            <th>RUN</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaUsuariosBody">
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <script src="../js/admin-usuarios.js"></script>
+</body>
+</html>
