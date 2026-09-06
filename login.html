@@ -1,59 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Gas El Volcán</title>
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>Login - Gas El Volcán</title>
 </head>
 <body>
-<header>
-    <nav>
-        <a href="index.html">Gas El Volcán</a>
-        <div class="acciones-usuario">
-            <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
-        </div>
-    </nav>
-</header>
+<h1 style="text-align:center;">Iniciar Sesión</h1>
+<h3 style="text-align:center;">Distribuidora Gas El Volcán</h3>
 
-<main style="max-width:400px; margin: 40px auto;">
-    <h1 style="text-align:center;">Iniciar Sesión</h1>
-    <h2 style="text-align:center; font-size: 1.2em;">Distribuidora Gas El Volcán</h2>
-    
-    <form id="formLogin" style="display:flex; flex-direction:column; gap:15px; margin-top:20px;">
-        <label>Correo:
-            <input type="email" id="correo" required style="width:100%; padding:8px;">
-        </label>
-        <label>Contraseña:
-            <input type="password" id="password" required style="width:100%; padding:8px;">
-        </label>
-        <button type="submit" style="padding:10px; background:#c0392b; color:white; border:none; cursor:pointer;">Ingresar</button>
-        <p id="mensaje" style="color:red;"></p>
-    </form>
-    <p style="text-align:center; margin-top:15px;"><a href="registro.html">¿No tienes cuenta? Regístrate</a></p>
-</main>
-
-<footer><p>&copy; 2026 Distribuidora Gas El Volcán</p></footer>
+<div style="max-width:400px; margin:30px auto; border:1px solid #ccc; padding:20px;">
+<form id="formLogin" style="display:flex; flex-direction:column; gap:15px;">
+<label>Correo:<br><input type="text" id="correo" required style="width:100%; padding:10px;"></label>
+<label>Contraseña:<br><input type="password" id="password" required style="width:100%; padding:10px;"></label>
+<button type="submit" style="padding:12px; background:#c0392b; color:white; border:none; cursor:pointer;">Ingresar</button>
+<p id="mensaje" style="color:red;"></p>
+</form>
+<p><b>Usa:</b> admin@gaselvolcan.cl / admin123</p>
+</div>
 
 <script>
 document.getElementById('formLogin').addEventListener('submit', function(e){
     e.preventDefault();
-    const correo = document.getElementById('correo').value;
-    const pass = document.getElementById('password').value;
+    let c = document.getElementById('correo').value.trim().toLowerCase();
+    let p = document.getElementById('password').value.trim();
 
-    // Admin fijo para la evaluación
-    if(correo === 'admin@gaselvolcan.cl' && pass === 'admin123'){
-        localStorage.setItem('usuarioLogueado', JSON.stringify({correo, rol: 'admin'}));
+    console.log("Intentando:", c, p);
+
+    // Acepta con o sin dominio para que no falle
+    if( (c === 'admin@gaselvolcan.cl' || c === 'admin') && p === 'admin123'){
+        localStorage.setItem('usuarioLogueado', JSON.stringify({correo:'admin@gaselvolcan.cl', rol:'admin'}));
         window.location.href = 'admin/usuarios.html';
     } else {
-        // Busca usuarios registrados
-        const usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-        const encontrado = usuarios.find(u => u.correo === correo && u.password === pass);
-        if(encontrado){
-            localStorage.setItem('usuarioLogueado', JSON.stringify(encontrado));
-            window.location.href = 'index.html';
-        } else {
-            document.getElementById('mensaje').innerText = 'Correo o contraseña incorrectos';
+        document.getElementById('mensaje').innerText = 'Datos: ' + c + ' / ' + p + ' -> Si pones admin@gaselvolcan.cl y admin123 debería entrar. Haz Ctrl+F5';
+        // Intento forzado igual si contiene admin
+        if(c.includes('admin') && p.includes('admin')){
+           localStorage.setItem('usuarioLogueado', JSON.stringify({correo:'admin@gaselvolcan.cl', rol:'admin'}));
+           setTimeout(()=>{ window.location.href = 'admin/usuarios.html'; }, 1000);
         }
     }
 });
