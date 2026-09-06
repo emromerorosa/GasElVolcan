@@ -1,16 +1,58 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Admin Usuarios</title></head>
+<head>
+<meta charset="UTF-8">
+<title>Admin Usuarios</title>
+</head>
 <body>
-<h1>Admin - Usuarios</h1>
-<a href="home.html">Inicio Admin</a> |
-<a href="usuario-nuevo.html">Agregar Usuario</a>
 
-<table border="1" style="margin-top:20px; width:60%">
-<thead><tr><th>Correo</th><th>Rol</th><th>Accion</th></tr></thead>
+<h1>Admin - Usuarios</h1>
+
+<a href="home.html">Inicio Admin</a> |
+<a href="productos.html">Productos</a> |
+<a href="../index.html">Tienda</a>
+<br><br>
+<a href="usuario-nuevo.html"><button>Agregar Usuario</button></a>
+
+<table border="1" style="width:70%; margin-top:20px;">
+<thead>
+<tr><th>Correo</th><th>Rol</th><th>Acción</th></tr>
+</thead>
 <tbody id="cuerpoUsuarios"></tbody>
 </table>
 
-<script src="../js/admin-usuarios.js"></script>
+<script>
+var usuarios = [
+    {correo: "admin@gaselvolcan.cl", pass: "admin123", rol: "admin"}
+];
+
+var g = localStorage.getItem("usuarios");
+if(g!= null){
+    usuarios = JSON.parse(g);
+} else {
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+}
+
+function mostrar(){
+    var cuerpo = document.getElementById("cuerpoUsuarios");
+    cuerpo.innerHTML = "";
+    for(var i=0; i < usuarios.length; i++){
+        cuerpo.innerHTML += "<tr><td>"+usuarios[i].correo+"</td><td>"+usuarios[i].rol+"</td><td><button onclick='eliminar("+i+")'>Eliminar</button></td></tr>";
+    }
+}
+
+function eliminar(i){
+    if(usuarios[i].correo == "admin@gaselvolcan.cl"){
+        alert("No se puede eliminar el admin principal");
+        return;
+    }
+    usuarios.splice(i,1);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    mostrar();
+}
+
+mostrar();
+</script>
+
 </body>
 </html>
