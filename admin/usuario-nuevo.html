@@ -2,51 +2,73 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nuevo Usuario</title>
+<link rel="stylesheet" href="../css/estilos.css">
 </head>
 <body>
 
 <h1>Nuevo Usuario</h1>
-
 <a href="usuarios.html">Volver a Usuarios</a>
 <br><br>
 
-Correo: <br>
-<input type="text" id="correo" placeholder="ej: cliente@gmail.com">
-<br><br>
-
-Clave: <br>
-<input type="text" id="clave" placeholder="123456">
-<br><br>
-
-Rol: <br>
-<select id="rol">
+RUN: <br><input type="text" id="run" placeholder="12345678-9"><br><br>
+Nombre: <br><input type="text" id="nombre"><br><br>
+Apellidos: <br><input type="text" id="apellidos"><br><br>
+Correo: <br><input type="email" id="correo" placeholder="ej: cliente@gmail.com"><br><br>
+Clave: <br><input type="text" id="clave" placeholder="123456"><br><br>
+Fecha Nacimiento: <br><input type="date" id="fecha"><br><br>
+Tipo: <br>
+<select id="tipo">
   <option value="cliente">cliente</option>
   <option value="admin">admin</option>
-</select>
-<br><br>
+</select><br><br>
+Region: <br><input type="text" id="region"><br><br>
+Comuna: <br><input type="text" id="comuna"><br><br>
+Direccion: <br><input type="text" id="direccion"><br><br>
 
 <button onclick="guardar()">Guardar Usuario</button>
 
 <script>
 function guardar(){
-  var correo = document.getElementById("correo").value;
-  var clave = document.getElementById("clave").value;
-  var rol = document.getElementById("rol").value;
+  var run = document.getElementById("run").value.trim();
+  var nombre = document.getElementById("nombre").value.trim();
+  var apellidos = document.getElementById("apellidos").value.trim();
+  var correo = document.getElementById("correo").value.trim();
+  var clave = document.getElementById("clave").value.trim();
+  var fecha = document.getElementById("fecha").value;
+  var tipo = document.getElementById("tipo").value;
+  var region = document.getElementById("region").value.trim();
+  var comuna = document.getElementById("comuna").value.trim();
+  var direccion = document.getElementById("direccion").value.trim();
 
-  if(correo == "" || clave == ""){
-    alert("Completa todos los campos");
+  if(!run ||!nombre ||!correo ||!clave){
+    alert("Completa RUN, Nombre, Correo y Clave");
     return;
   }
 
-  var usuarios = JSON.parse(localStorage.getItem("usuarios"));
-  if(usuarios == null){
-    usuarios = [{correo: "admin@gaselvolcan.cl", pass: "admin123", rol: "admin"}];
+  var usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+  
+  // si es primera vez, crea el admin base
+  if(usuarios.length === 0){
+    usuarios = [{run:"11111111-1", nombre:"Admin", apellidos:"Gas El Volcan", correo:"admin@gaselvolcan.cl", pass:"admin123", tipo:"admin", fecha:"", region:"", comuna:"", direccion:""}];
   }
 
-  var nuevo = {correo: correo, pass: clave, rol: rol};
-  usuarios.push(nuevo);
+  var nuevo = {
+    run: run,
+    nombre: nombre,
+    apellidos: apellidos,
+    correo: correo,
+    pass: clave,
+    fecha: fecha,
+    tipo: tipo,
+    region: region,
+    comuna: comuna,
+    direccion: direccion,
+    rol: tipo // guardamos ambos para compatibilidad
+  };
 
+  usuarios.push(nuevo);
   localStorage.setItem("usuarios", JSON.stringify(usuarios));
   alert("Usuario guardado: " + correo);
   window.location.href = "usuarios.html";
