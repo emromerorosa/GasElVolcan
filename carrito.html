@@ -1,23 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carrito - Gas El Volcan</title>
-<link rel="stylesheet" href="../css/estilos.css">
+<link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
+<header>
+<nav>
+<div class="logo"><span>Gas El Volcán</span></div>
+<ul class="menu-principal">
+<li><a href="index.html">Home</a></li>
+<li><a href="productos.html">Productos</a></li>
+<li><a href="blogs.html">Blogs</a></li>
+</ul>
+<div class="acciones-usuario"><a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a></div>
+</nav>
+</header>
 
+<main style="max-width:1000px;margin:40px auto;padding:20px;">
 <h1>Carrito de Compras</h1>
-<a href="../index.html">Volver a Tienda</a>
+<a href="index.html">Volver a Tienda</a>
 <br><br>
 
 <div id="carritoVacio" hidden>
   <p>Tu carrito está vacío</p>
-  <a href="../index.html">Ir a comprar</a>
+  <a href="productos.html">Ir a comprar</a>
 </div>
 
-<table id="tablaCarrito" border="1" cellpadding="10" style="width:95%;">
+<table id="tablaCarrito" border="1" cellpadding="10" style="width:95%;border-collapse:collapse;">
   <thead>
     <tr>
       <th>Imagen</th>
@@ -35,10 +47,12 @@
 
 <button onclick="vaciarCarrito(); renderizarCarrito();">Vaciar Carrito</button>
 <a href="checkout.html"><button>Ir a Pagar</button></a>
+</main>
 
-<script src="../js/productos-data.js"></script>
-<script src="../js/carrito.js"></script>
-<script src="../js/carrito-pagina.js"></script>
-
+<script src="js/productos-data.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/carrito-pagina.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>
