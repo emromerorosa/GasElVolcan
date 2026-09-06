@@ -1,3 +1,4 @@
+// Arreglo con los productos reales del catálogo de la Distribuidora Gas El Volcán
 const PRODUCTOS = [
     {
         codigo: "CL001",
@@ -169,6 +170,7 @@ const PRODUCTOS = [
     }
 ];
 
+// Ícono de respaldo por categoría, usado cuando un producto no tiene imagen asignada
 const ICONOS_POR_CATEGORIA = {
   "Cilindros de Gas": "🔥",
   "Reguladores": "🔧",
@@ -176,6 +178,8 @@ const ICONOS_POR_CATEGORIA = {
   "Accesorios": "🛠️"
 };
 
+// Devuelve el HTML de la imagen de un producto: una <img> real si tiene foto asignada,
+// o el ícono de su categoría si no
 function obtenerImagenHtml(producto, clase) {
   if (producto.imagen) {
     return `<img class="${clase}" src="${producto.imagen}" alt="${producto.nombre}">`;

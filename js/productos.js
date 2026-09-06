@@ -1,4 +1,5 @@
 
+// Muestra la grilla de productos en productos.html, recorriendo el arreglo PRODUCTOS
 const contenedor = document.getElementById("grid-productos");
 
 let html= "";

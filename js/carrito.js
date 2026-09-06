@@ -1,9 +1,10 @@
 
+// Guarda el arreglo del carrito en localStorage (convertido a texto)
 function guardarCarrito(carrito) {
     const texto = JSON.stringify(carrito);
     localStorage.setItem("carrito", texto);
 }
-
+// Lee el carrito guardado en localStorage; si no hay nada, devuelve un arreglo vacío
 function obtenerCarrito() {
     const texto = localStorage.getItem("carrito");
     if (texto === null) {
@@ -11,7 +12,7 @@ function obtenerCarrito() {
     }
     return JSON.parse(texto);
 }
-
+// Agrega una cantidad de un producto al carrito, respetando el stock disponible
 function agregarAlCarrito(codigo, cantidad) {
   const producto = PRODUCTOS.find(function (p) {
     return p.codigo === codigo;
@@ -44,7 +45,7 @@ function agregarAlCarrito(codigo, cantidad) {
 
   guardarCarrito(carrito);
 }
-
+// Elimina por completo un producto del carrito
 function quitarDelCarrito(codigo) {
   const carrito = obtenerCarrito();
 
@@ -54,7 +55,7 @@ function quitarDelCarrito(codigo) {
 
   guardarCarrito(carritoActualizado);
 }
-
+// Cambia la cantidad de un producto ya agregado; si la nueva cantidad es 0 o menos, lo quita
 function actualizarCantidad(codigo, nuevaCantidad) {
   if (nuevaCantidad <= 0) {
     quitarDelCarrito(codigo);
@@ -86,7 +87,7 @@ function actualizarCantidad(codigo, nuevaCantidad) {
     guardarCarrito(carrito);
   }
 }
-
+// Calcula el total a pagar sumando precio x cantidad de cada producto del carrito
 function calcularTotal() {
   const carrito = obtenerCarrito();
 
@@ -102,7 +103,7 @@ function calcularTotal() {
 
   return total;
 }
-
+// Actualiza el número del carrito en el menú, sumando las unidades totales
 function actualizarContadorCarrito() {
   const carrito = obtenerCarrito();
 

@@ -1,4 +1,4 @@
-
+// Muestra los productos destacados en la página de inicio (los primeros 4 del catálogo)
 const destacados = PRODUCTOS.slice(0, 4);
 
 let html = "";
