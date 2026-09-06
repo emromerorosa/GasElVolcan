@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Distribuidora Gas El Volcán - Registro</title>
+    <title>Registro de Usuario - Distribuidora Gas El Volcán</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
+    <!-- ENCABEZADO COMPARTIDO -->
     <header>
         <nav>
             <div class="logo">
-                <span class="logo-nombre">Gas El Volcán</span>
+                <span class="logo-nombre"><strong>Gas El Volcán</strong></span>
             </div>
+
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+
             <ul class="menu-principal">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="productos.html">Productos</a></li>
@@ -20,20 +25,150 @@
                 <li><a href="blogs.html">Blogs</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
+
             <div class="acciones-usuario">
                 <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
             </div>
         </nav>
     </header>
 
-    <main>
-        <!-- TODO: formulario de registro (nombre, correo, contraseña, confirmar contraseña, teléfono opcional) -->
-        <!-- TODO: select región + select comuna (dependientes entre sí) -->
+    <!-- CONTENIDO PRINCIPAL: REGISTRO (Figura 4) -->
+    <main class="contenedor-auth">
+      <div class="auth-card" style="max-width: 650px;">
+      
+        <div class="auth-header">
+          <div style="font-size: 3rem;">📝</div>
+          <h2>Registro de Usuario</h2>
+          <p class="subtitulo">Crea tu cuenta para pedir tus cilindros a domicilio</p>
+        </div>
+
+        <form id="formRegistro" novalidate>
+        
+          <!-- Fila: RUN -->
+          <div class="form-group">
+            <label for="run">RUN (Sin puntos ni guión, ej: 19011022K) *</label>
+            <input 
+              type="text" 
+              id="run" 
+              name="run" 
+              maxlength="9" 
+              placeholder="19011022K"
+              required
+            >
+            <small class="mensaje-error" id="error-run"></small>
+          </div>
+
+          <!-- Fila doble: Nombres y Apellidos -->
+          <div style="display: flex; gap: var(--espacio-md); flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 240px;">
+              <label for="nombre">Nombre *</label>
+              <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Ej: Juan" required>
+              <small class="mensaje-error" id="error-nombre"></small>
+            </div>
+            <div class="form-group" style="flex: 1; min-width: 240px;">
+              <label for="apellidos">Apellidos *</label>
+              <input type="text" id="apellidos" name="apellidos" maxlength="100" placeholder="Ej: Pérez González" required>
+              <small class="mensaje-error" id="error-apellidos"></small>
+            </div>
+          </div>
+
+          <!-- Fila: Correo -->
+          <div class="form-group">
+            <label for="correo">Correo electrónico *</label>
+            <input 
+              type="email" 
+              id="correo" 
+              name="correo" 
+              maxlength="100" 
+              placeholder="ejemplo@duoc.cl o @gmail.com"
+              required
+            >
+            <small class="mensaje-error" id="error-correo"></small>
+          </div>
+
+          <!-- Fila doble: Contraseña y Confirmar Contraseña -->
+          <div style="display: flex; gap: var(--espacio-md); flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 240px;">
+              <label for="password">Contraseña (4 a 10 caracteres) *</label>
+              <input type="password" id="password" name="password" minlength="4" maxlength="10" placeholder="••••••••" required>
+              <small class="mensaje-error" id="error-password"></small>
+            </div>
+            <div class="form-group" style="flex: 1; min-width: 240px;">
+              <label for="confirmPassword">Confirmar Contraseña *</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" minlength="4" maxlength="10" placeholder="••••••••" required>
+              <small class="mensaje-error" id="error-confirmPassword"></small>
+            </div>
+          </div>
+
+          <!-- Fila doble: Teléfono y Fecha de Nacimiento -->
+          <div style="display: flex; gap: var(--espacio-md); flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 240px;">
+              <label for="telefono">Teléfono (opcional)</label>
+              <input type="tel" id="telefono" name="telefono" maxlength="12" placeholder="+56912345678">
+              <small class="mensaje-error" id="error-telefono"></small>
+            </div>
+            <div class="form-group" style="flex: 1; min-width: 240px;">
+              <label for="fechaNacimiento">Fecha de Nacimiento (opcional)</label>
+              <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+              <small class="mensaje-error" id="error-fechaNacimiento"></small>
+            </div>
+          </div>
+
+          <!-- Fila doble: Select Dependiente Región y Comuna -->
+          <div style="display: flex; gap: var(--espacio-md); flex-wrap: wrap;">
+            <div class="form-group" style="flex: 1; min-width: 240px;">
+              <label for="region">Región *</label>
+              <select id="region" name="region" required>
+                <option value="">-- Selecciona una región --</option>
+              </select>
+              <small class="mensaje-error" id="error-region"></small>
+            </div>
+
+            <div class="form-group" style="flex: 1; min-width: 240px;">
+              <label for="comuna">Comuna *</label>
+              <select id="comuna" name="comuna" required disabled>
+                <option value="">-- Selecciona primero la región --</option>
+              </select>
+              <small class="mensaje-error" id="error-comuna"></small>
+            </div>
+          </div>
+
+          <!-- Fila: Dirección -->
+          <div class="form-group">
+            <label for="direccion">Dirección de entrega *</label>
+            <input 
+              type="text" 
+              id="direccion" 
+              name="direccion" 
+              maxlength="300" 
+              placeholder="Ej: Av. O'Higgins 1234, Chillán"
+              required
+            >
+            <small class="mensaje-error" id="error-direccion"></small>
+          </div>
+
+          <!-- Botón de Envío -->
+          <button type="submit" class="btn-primario btn-block" style="margin-top: 10px;">Completar Registro</button>
+
+          <!-- Mensaje general -->
+          <div id="mensaje-general" class="mensaje-alerta"></div>
+        </form>
+
+        <div class="auth-footer">
+          <p>¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+        </div>
+
+      </div>
     </main>
 
+    <!-- PIE DE PÁGINA COMPARTIDO -->
     <footer>
-        <p>&copy; 2026 Distribuidora Gas El Volcán</p>
+      <p>&copy; 2026 Distribuidora Gas El Volcán</p>
     </footer>
 
+    <!-- Scripts: Validar RUN primero, luego Carrito, luego Registro -->
+    <script src="js/validacion-run.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/registro.js"></script>
 </body>
 </html>
