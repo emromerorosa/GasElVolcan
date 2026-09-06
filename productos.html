@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Productos - Gas El Volcan</title>
     <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        .admin-container { padding: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background: #f4f4f4; }
+        .btn { padding: 6px 12px; background: #d35400; color: white; border: none; cursor: pointer; text-decoration: none; border-radius: 4px; }
+    </style>
 </head>
 <body>
     <header>
@@ -20,6 +27,43 @@
             <div class="acciones-usuario"><a href="index.html">Salir</a></div>
         </nav>
     </header>
-    <main style="padding:40px;"><h1>Gestion de Productos</h1><p>Listado de productos del administrador.</p></main>
+    <main class="admin-container">
+        <h1>Gestion de Productos</h1>
+        <a href="#" class="btn">+ Nuevo Producto</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Gas 5kg</td>
+                    <td>$15.990</td>
+                    <td>50</td>
+                    <td><button class="btn">Editar</button> <button class="btn">Eliminar</button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Gas 15kg</td>
+                    <td>$25.990</td>
+                    <td>30</td>
+                    <td><button class="btn">Editar</button> <button class="btn">Eliminar</button></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Gas 45kg</td>
+                    <td>$65.990</td>
+                    <td>10</td>
+                    <td><button class="btn">Editar</button> <button class="btn">Eliminar</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
 </body>
 </html>
