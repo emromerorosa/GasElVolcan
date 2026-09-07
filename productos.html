@@ -3,23 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Productos - Gas El Volcan</title>
+    <title>Productos - Gas El Volcán</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo"><span class="logo-nombre">Gas El Volcan - ADMIN</span></div>
+            <div class="logo">
+                <span class="logo-nombre">Gas El Volcán</span>
+            </div>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+            <label for="menu-toggle" class="menu-toggle-btn">☰</label>
             <ul class="menu-principal">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="productos.html">Productos</a></li>
-                <li><a href="usuarios.html">Usuarios</a></li>
                 <li><a href="nosotros.html">Nosotros</a></li>
                 <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
             </ul>
-            <div class="acciones-usuario"><a href="index.html">Salir</a></div>
+            <div class="acciones-usuario">
+                <a href="login.html">Iniciar sesión</a>
+                <a href="registro.html">Registrar usuario</a>
+                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+            </div>
         </nav>
     </header>
-    <main style="padding:40px;"><h1>Gestion de Productos</h1><p>Listado de productos del administrador.</p></main>
+
+    <main style="max-width:1200px;margin:20px auto;padding:20px;">
+        <h1>Nuestros Productos</h1>
+        
+
+        <div id="grid-productos" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Gas El Volcán - Todos los derechos reservados</p>
+    </footer>
+
+    <script src="js/productos-data.js"></script>
+    <script src="js/carrito.js"></script>
+    <script src="js/productos.js"></script>
 </body>
 </html>
