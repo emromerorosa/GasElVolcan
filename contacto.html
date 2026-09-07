@@ -1,66 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contacto - Gas El Volcan</title>
-<link rel="stylesheet" href="../css/estilos.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Distribuidora Gas El Volcán</title>
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
-<h1>Contacto</h1>
-<a href="../index.html">Volver a Tienda</a>
-<br><br>
+    <!-- ENCABEZADO COMPARTIDO -->
+    <header>
+        <nav>
+            <div class="logo">
+                <span class="logo-nombre"><strong>Gas El Volcán</strong></span>
+            </div>
 
-<main>
-    <form id="formContacto" novalidate>
-        <label>Nombre:</label><br>
-        <input type="text" id="nombreContacto" maxlength="100" required>
-        <br><br>
+            <!-- Botón menú hamburguesa para celulares -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+            <label for="menu-toggle" class="menu-toggle-btn">&#9776;</label>
+
+            <ul class="menu-principal">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="nosotros.html">Nosotros</a></li>
+                <li><a href="blogs.html">Blogs</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+
+            <div class="acciones-usuario">
+                <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL: CONTACTO -->
+    <main class="contenedor-auth">
+      <div class="auth-card">
+      
+        <div class="auth-header">
+          <div style="font-size: 3rem;">✉️</div>
+          <h2>Gas El Volcán</h2>
+          <p class="subtitulo">FORMULARIO DE CONTACTO</p>
+        </div>
+
+        <form id="formContacto" novalidate>
         
-        <label>Correo:</label><br>
-        <input type="email" id="correoContacto" maxlength="100" required>
-        <br><br>
-        
-        <label>Comentario:</label><br>
-        <textarea id="comentarioContacto" maxlength="500" rows="5" required></textarea>
-        <br><br>
-        
-        <button type="submit">Enviar Mensaje</button>
-    </form>
-    <p id="mensajeContacto"></p>
-</main>
+          <!-- Campo: Nombre Completo -->
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input 
+              type="text" 
+              id="nombre" 
+              name="nombre" 
+              maxlength="100" 
+              placeholder="Ej: Juan Pérez González"
+              required
+            >
+            <small class="mensaje-error" id="error-nombre"></small>
+          </div>
 
-<script>
-document.getElementById("formContacto").addEventListener("submit", function(e){
-    e.preventDefault();
-    var nombre = document.getElementById("nombreContacto").value.trim();
-    var correo = document.getElementById("correoContacto").value.trim();
-    var comentario = document.getElementById("comentarioContacto").value.trim();
-    var mensaje = document.getElementById("mensajeContacto");
+          <!-- Campo: Correo Electrónico -->
+          <div class="form-group">
+            <label for="correo">Correo electrónico</label>
+            <input 
+              type="email" 
+              id="correo" 
+              name="correo" 
+              maxlength="100" 
+              placeholder="ejemplo@duoc.cl o @gmail.com"
+              required
+            >
+            <small class="mensaje-error" id="error-correo"></small>
+          </div>
 
-    if(nombre.length == 0 || nombre.length > 100){
-        mensaje.textContent = "Nombre requerido (max 100 caracteres)";
-        return;
-    }
-    if(!correo.includes("@") || correo.length > 100){
-        mensaje.textContent = "Correo no valido";
-        return;
-    }
-    if(comentario.length == 0 || comentario.length > 500){
-        mensaje.textContent = "Comentario requerido (max 500 caracteres)";
-        return;
-    }
+          <!-- Campo: Comentario / Mensaje -->
+          <div class="form-group">
+            <label for="comentario">Comentario o Consulta</label>
+            <textarea 
+              id="comentario" 
+              name="comentario" 
+              rows="5" 
+              maxlength="500" 
+              placeholder="Escribe tu mensaje aquí (máximo 500 caracteres)..."
+              required
+            ></textarea>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <small class="mensaje-error" id="error-comentario"></small>
+              <small id="contador-caracteres" style="color: #666; font-size: 0.8rem;">0 / 500</small>
+            </div>
+          </div>
 
-    // simulamos envio
-    var contactos = JSON.parse(localStorage.getItem("mensajesContacto") || "[]");
-    contactos.push({nombre:nombre, correo:correo, comentario:comentario, fecha:new Date().toISOString()});
-    localStorage.setItem("mensajesContacto", JSON.stringify(contactos));
+          <!-- Botón de envío -->
+          <button type="submit" class="btn-primario btn-block">Enviar Mensaje</button>
 
-    mensaje.textContent = "¡Mensaje enviado con exito! Nos contactaremos pronto.";
-    document.getElementById("formContacto").reset();
-});
-</script>
+          <!-- Mensaje general de resultado -->
+          <div id="mensaje-general" class="mensaje-alerta"></div>
+        </form>
 
+      </div>
+    </main>
+
+    <!-- PIE DE PÁGINA COMPARTIDO -->
+    <footer>
+      <p>&copy; 2026 Distribuidora Gas El Volcán</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/carrito.js"></script>
+    <script src="js/contacto.js"></script>
 </body>
 </html>

@@ -32,17 +32,8 @@
     <main style="max-width:1200px;margin:20px auto;padding:20px;">
         <h1>Nuestros Productos</h1>
         
-        <div style="display:flex;gap:20px;margin-bottom:20px;flex-wrap:wrap;">
-            <input type="text" id="buscador" placeholder="Buscar producto..." style="padding:10px;flex:1;min-width:200px;">
-            <select id="filtroCategoria" style="padding:10px;">
-                <option value="todos">Todas las categorias</option>
-                <option value="cilindros">Cilindros</option>
-                <option value="accesorios">Accesorios</option>
-            </select>
-        </div>
 
         <div id="grid-productos" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;"></div>
-        <p id="sinResultados" hidden>No se encontraron productos</p>
     </main>
 
     <footer>
@@ -52,6 +43,5 @@
     <script src="js/productos-data.js"></script>
     <script src="js/carrito.js"></script>
     <script src="js/productos.js"></script>
-    <script src="js/index.js"></script>
 </body>
 </html>

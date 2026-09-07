@@ -1,79 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nuevo Usuario</title>
-<link rel="stylesheet" href="../css/estilos.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Usuario - Gas El Volcán</title>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
 
-<h1>Nuevo Usuario</h1>
-<a href="usuarios.html">Volver a Usuarios</a>
-<br><br>
+    <div class="admin-layout">
 
-RUN: <br><input type="text" id="run" placeholder="12345678-9"><br><br>
-Nombre: <br><input type="text" id="nombre"><br><br>
-Apellidos: <br><input type="text" id="apellidos"><br><br>
-Correo: <br><input type="email" id="correo" placeholder="ej: cliente@gmail.com"><br><br>
-Clave: <br><input type="text" id="clave" placeholder="123456"><br><br>
-Fecha Nacimiento: <br><input type="date" id="fecha"><br><br>
-Tipo: <br>
-<select id="tipo">
-  <option value="cliente">cliente</option>
-  <option value="admin">admin</option>
-</select><br><br>
-Region: <br><input type="text" id="region"><br><br>
-Comuna: <br><input type="text" id="comuna"><br><br>
-Direccion: <br><input type="text" id="direccion"><br><br>
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <span>Gas El Volcán</span>
+            </div>
+            <ul class="admin-menu">
+                <li><a href="home.html">Dashboard</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="usuarios.html">Usuarios</a></li>
+            </ul>
+        </aside>
 
-<button onclick="guardar()">Guardar Usuario</button>
+        <main class="admin-contenido">
+            <h1>Nuevo Usuario</h1>
 
-<script>
-function guardar(){
-  var run = document.getElementById("run").value.trim();
-  var nombre = document.getElementById("nombre").value.trim();
-  var apellidos = document.getElementById("apellidos").value.trim();
-  var correo = document.getElementById("correo").value.trim();
-  var clave = document.getElementById("clave").value.trim();
-  var fecha = document.getElementById("fecha").value;
-  var tipo = document.getElementById("tipo").value;
-  var region = document.getElementById("region").value.trim();
-  var comuna = document.getElementById("comuna").value.trim();
-  var direccion = document.getElementById("direccion").value.trim();
+            <form id="formUsuarioNuevo" novalidate>
 
-  if(!run ||!nombre ||!correo ||!clave){
-    alert("Completa RUN, Nombre, Correo y Clave");
-    return;
-  }
+                <div class="form-group">
+                    <label for="run">RUN</label>
+                    <input type="text" id="run" name="run" placeholder="19011022K" maxlength="9" autocomplete="off">
+                    <span class="error-mensaje" id="errorRun"></span>
+                </div>
 
-  var usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
-  
-  // si es primera vez, crea el admin base
-  if(usuarios.length === 0){
-    usuarios = [{run:"11111111-1", nombre:"Admin", apellidos:"Gas El Volcan", correo:"admin@gaselvolcan.cl", pass:"admin123", tipo:"admin", fecha:"", region:"", comuna:"", direccion:""}];
-  }
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" maxlength="50" autocomplete="given-name">
+                    <span class="error-mensaje" id="errorNombre"></span>
+                </div>
 
-  var nuevo = {
-    run: run,
-    nombre: nombre,
-    apellidos: apellidos,
-    correo: correo,
-    pass: clave,
-    fecha: fecha,
-    tipo: tipo,
-    region: region,
-    comuna: comuna,
-    direccion: direccion,
-    rol: tipo // guardamos ambos para compatibilidad
-  };
+                <div class="form-group">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" id="apellidos" name="apellidos" maxlength="100" autocomplete="family-name">
+                    <span class="error-mensaje" id="errorApellidos"></span>
+                </div>
 
-  usuarios.push(nuevo);
-  localStorage.setItem("usuarios", JSON.stringify(usuarios));
-  alert("Usuario guardado: " + correo);
-  window.location.href = "usuarios.html";
-}
-</script>
+                <div class="form-group">
+                    <label for="correo">Correo</label>
+                    <input type="email" id="correo" name="correo" maxlength="100" placeholder="ej: cliente@gmail.com" autocomplete="email">
+                    <span class="error-mensaje" id="errorCorreo"></span>
+                </div>
 
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" minlength="4" maxlength="10" autocomplete="new-password">
+                    <span class="error-mensaje" id="errorPassword"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" autocomplete="bday">
+                    <span class="error-mensaje" id="errorFechaNacimiento"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipoUsuario">Tipo de Usuario</label>
+                    <select id="tipoUsuario" name="tipoUsuario">
+                        <option value="">Seleccione</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Cliente">Cliente</option>
+                        <option value="Vendedor">Vendedor</option>
+                    </select>
+                    <span class="error-mensaje" id="errorTipoUsuario"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="region">Región</label>
+                    <select id="region" name="region">
+                        <option value="">Seleccione Región</option>
+                        <option value="Región de Ñuble">Región de Ñuble</option>
+                    </select>
+                    <span class="error-mensaje" id="errorRegion"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="comuna">Comuna</label>
+                    <select id="comuna" name="comuna">
+                        <option value="">Seleccione Comuna</option>
+                    </select>
+                    <span class="error-mensaje" id="errorComuna"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" name="direccion" maxlength="300" autocomplete="street-address">
+                    <span class="error-mensaje" id="errorDireccion"></span>
+                </div>
+
+                <button type="submit" class="btn-primario">Guardar Usuario</button>
+
+            </form>
+
+        </main>
+
+    </div>
+
+    <script>
+        const comunasPorRegion = {
+            "Región de Ñuble": ["Chillán", "Chillán Viejo", "El Carmen", "Pinto", "San Ignacio", "Bulnes", "Quillón"]
+        };
+
+        document.getElementById("region").addEventListener("change", function () {
+            const region = this.value;
+            const selectComuna = document.getElementById("comuna");
+            selectComuna.innerHTML = '<option value="">Seleccione Comuna</option>';
+            if (comunasPorRegion[region]) {
+                comunasPorRegion[region].forEach(c => {
+                    let opt = document.createElement("option");
+                    opt.value = c;
+                    opt.textContent = c;
+                    selectComuna.appendChild(opt);
+                });
+            }
+        });
+    </script>
+    <script src="../js/validaciones-comunes.js"></script>
+    <script src="../js/usuario-nuevo.js"></script>
 </body>
 </html>
