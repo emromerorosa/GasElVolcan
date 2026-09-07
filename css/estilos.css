@@ -156,5 +156,36 @@ img.imagen-producto-grande {
         display: flex;
     }
 }
+    #menu-toggle:checked ~ .acciones-usuario {
+        display: flex;
+    }
+}  <- ESTA ES LA ULTIMA QUE TIENES
 
+/* --- FIX VIDEO NOSOTROS CHILLAN --- */
+.hero-nosotros {
+  position: relative;
+  width: 100%;
+  height: 65vh;
+  overflow: hidden;
+}
+
+.hero-nosotros img,
+.hero-nosotros video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+}
+
+.hero-nosotros .contenido-hero {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
+  border-radius: 10px;
+}
 
