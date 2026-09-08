@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nosotros - Gas El Volcán - Chillán</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/estilos.css">
   <style>
 .video-nosotros {
   position: relative;
@@ -54,16 +54,27 @@
   </style>
 </head>
 <body>
-  <header>
+<header>
     <nav>
-      <a href="index.html">Inicio</a>
-      <a href="productos.html">Productos</a>
-      <a href="nosotros.html">Nosotros</a>
-      <a href="contacto.html">Contacto</a>
-      <a href="login.html">Login</a>
+        <div class="logo">
+            <span class="logo-nombre">Gas El Volcán</span>
+        </div>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle-input">
+        <label for="menu-toggle" class="menu-toggle-btn">☰</label>
+        <ul class="menu-principal">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="blogs.html">Blogs</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+        <div class="acciones-usuario">
+            <a href="login.html">Iniciar sesión</a>
+            <a href="registro.html">Registrar usuario</a>
+            <a href="carrito.html" class="carrito-link">🛒 Cart (<span id="contadorCarrito">0</span>)</a>
+        </div>
     </nav>
-  </header>
-
+</header>
   <!-- VIDEO PRINCIPAL -->
   <section class="video-nosotros">
     <video autoplay muted loop playsinline>
